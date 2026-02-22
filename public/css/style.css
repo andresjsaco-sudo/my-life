@@ -63,6 +63,7 @@
       justify-content: space-between;
       align-items: center;
       background: rgba(8, 12, 16, 0.85);
+      -webkit-backdrop-filter: blur(12px);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       overflow-x: auto;
@@ -721,7 +722,6 @@
       /* Hero */
       #hero {
         padding: 6rem 1.5rem 3rem;
-        min-height: auto;
       }
       h1 { font-size: 2.8rem; }
       .hero-subtitle { font-size: 1.2rem; }

@@ -65,3 +65,17 @@ function typeWriter() {
 }
 
 typeWriter();
+
+// Theme toggle
+const toggle = document.getElementById('theme-toggle');
+
+// Cargar preferencia guardada
+if (localStorage.getItem('theme') === 'light') {
+  document.body.classList.add('light');
+  toggle.checked = true;
+}
+
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('light', toggle.checked);
+  localStorage.setItem('theme', toggle.checked ? 'light' : 'dark');
+});
