@@ -1,0 +1,184 @@
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>~/</span>jab</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">{{role}} · {{location}}</div>
+    <h1>Juan Andrés<br /><span class="highlight">Betancourt</span></h1>
+    <div class="hero-subtitle">I build things that sense the world<span class="cursor"></span></div>
+    <div class="hero-quote">
+      "The most interesting signals are the ones<br />hiding just below the threshold of perception."
+    </div>
+    <p class="hero-desc">
+      Electronic engineering student at {{university}}, specializing in instrumentation,
+      IoT sensor systems, and machine learning applied to real-world physical problems.
+      I design from the transistor up.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    {{#each stats}}
+    <div class="stat">
+      <div class="stat-number">{{number}}<span>{{suffix}}</span></div>
+      <div class="stat-label">{{label}}</div>
+    </div>
+    {{/each}}
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 — About</div>
+  <h2>The engineer<br />behind the circuits</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      {{#each bio}}
+      <p>{{{this}}}</p>
+      {{/each}}
+      <div class="about-tags">
+        {{#each tags}}
+        <span class="tag {{accent}}">{{label}}</span>
+        {{/each}}
+      </div>
+    </div>
+    <div class="about-photo-container reveal">
+      <img
+        src="/images/profile.jpg"
+        alt="{{name}}"
+        class="about-photo"
+        onerror="this.style.display='none'"
+      />
+      <div class="about-photo-frame"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="inner">
+    <div class="section-label">02 — Skills</div>
+    <h2>What I work with</h2>
+    <div class="skills-grid">
+      {{#each skills}}
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">{{{icon}}}</div>
+        <h3>{{{title}}}</h3>
+        <div class="skill-list">
+          {{#each pills}}
+          <span class="skill-pill">{{{this}}}</span>
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">03 — Projects</div>
+  <h2>Things I've built</h2>
+  <div class="projects-grid">
+    {{#each projects}}
+    <div class="project-card {{#if featured}}project-featured{{/if}} reveal">
+      <div class="project-type">{{type}}</div>
+      <h3>{{title}}</h3>
+      <p>{{{description}}}</p>
+      <div class="project-tags">
+        {{#each tags}}
+        <span class="project-tag">{{this}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">04 — Certifications</div>
+  <h2>Courses & Certs</h2>
+  <div class="timeline">
+    {{#each certifications}}
+    <div class="timeline-item reveal">
+      <div class="timeline-period">{{org}}</div>
+      <div class="timeline-title">{{title}}</div>
+      <div class="timeline-org">{{issuer}}</div>
+      <div class="timeline-desc">{{desc}}</div>
+    </div>
+    {{/each}}
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">05 — Experience</div>
+  <h2>Where I've led</h2>
+  <div class="timeline">
+    {{#each experience}}
+    <div class="timeline-item reveal">
+      <div class="timeline-period">{{period}}</div>
+      <div class="timeline-title">{{title}}</div>
+      <div class="timeline-org">{{org}}</div>
+      <div class="timeline-desc">{{{desc}}}</div>
+    </div>
+    {{/each}}
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="inner">
+    <div class="section-label">06 — Contact</div>
+    <div class="contact-grid">
+      <div class="contact-text reveal">
+        <h2>Let's build something that matters</h2>
+        <p>
+          Whether it's a sensor system, a research collaboration, or just a conversation about
+          instrumentation, IoT, or the road to Formula 1 — I'm always open to connecting.
+        </p>
+        <a href="mailto:{{contact.email}}" class="btn btn-primary">Send an Email</a>
+      </div>
+      <div class="contact-links reveal">
+        <a href="{{contact.linkedin}}" target="_blank" class="contact-link">
+          <span class="contact-link-icon">in</span>
+          <span class="contact-link-text">{{contact.linkedinHandle}}</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="{{contact.linkedin}}" target="_blank" class="contact-link">
+          <span class="contact-link-icon">◉</span>
+          <span class="contact-link-text">IEEE RAS — Universidad del Norte</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="mailto:{{contact.email}}" class="contact-link">
+          <span class="contact-link-icon">@</span>
+          <span class="contact-link-text">{{contact.email}}</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <div class="contact-link" style="cursor:default; opacity:0.5;">
+          <span class="contact-link-icon">📍</span>
+          <span class="contact-link-text">{{contact.location}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 {{name}} — Built with <span>intention</span>.</p>
+</footer>
