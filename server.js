@@ -34,8 +34,9 @@ const data = {
      I understand every layer of it.`,
     `Beyond engineering, I've spent three summers in New Jersey as a leader at <strong>Kiddie Keep Well Camp</strong>,
      a nonprofit serving children from low-income families — progressing from counselor to Program Director
-     and, in Summer 2026, Assistant Director. Leadership that matters to me as much as the circuits.`
-    `I was Vice President and later President of the IEEE RAS chapter at Uninorte, connecting students 
+     and, in Summer 2026, Assistant Director. Leadership that matters to me as much as the circuits.
+     
+     I was Vice President and later President of the IEEE RAS chapter at Uninorte, connecting students 
      to the frontier of robotics and automation. I speak Spanish natively, English fluently, and can get by in French 
      and Portuguese.`,
   ],
