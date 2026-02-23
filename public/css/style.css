@@ -300,6 +300,7 @@
       color: var(--text);
       margin-bottom: 1.2rem;
       font-size: 1rem;
+      text-align: justify;
     }
 
     .about-text p strong {
@@ -479,6 +480,7 @@
       color: var(--text-dim);
       margin-bottom: 1.5rem;
       line-height: 1.65;
+      text-align: justify;
     }
 
     .project-tags {
