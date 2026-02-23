@@ -192,7 +192,7 @@ const data = {
     },
   ],
   contact: {
-    email: 'jab@example.com', // update with real email
+    email: 'jsaco@uninorte.edu.co',
     linkedin: 'https://www.linkedin.com/in/andresjsaco',
     linkedinHandle: 'linkedin.com/in/andresjsaco',
     location: 'Barranquilla, Colombia',
