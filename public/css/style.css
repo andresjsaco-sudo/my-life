@@ -319,17 +319,6 @@
       border: 1px solid var(--border);
     }
 
-    .about-photo-frame {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      right: -16px;
-      bottom: -16px;
-      border: 1px solid var(--accent);
-      border-radius: 4px;
-      opacity: 0.3;
-      pointer-events: none;
-    }
 
     .about-tags {
       display: flex;
