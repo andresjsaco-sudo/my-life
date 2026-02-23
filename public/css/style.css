@@ -501,7 +501,7 @@
     }
 
     .project-featured {
-      grid-column: span 2;
+      ./*grid-column: span 2; */
       background: linear-gradient(135deg, var(--bg2) 0%, rgba(0, 212, 255, 0.04) 100%);
       border-color: rgba(0, 212, 255, 0.3);
     }
