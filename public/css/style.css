@@ -104,6 +104,7 @@
       z-index: 1;
       min-height: 100vh;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       padding: 8rem 3rem 4rem;
       max-width: 1200px;
@@ -722,6 +723,8 @@
       /* Hero */
       #hero {
         padding: 6rem 1.5rem 3rem;
+        flex-direction: column;
+        align-items: flex-start;
       }
       h1 { font-size: 2.8rem; }
       .hero-subtitle { font-size: 1.2rem; }
