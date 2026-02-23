@@ -218,7 +218,7 @@
     }
 
     .hero-stats {
-      position: absolute;
+      position: static;
       right: 3rem;
       bottom: 4rem;
       display: flex;
