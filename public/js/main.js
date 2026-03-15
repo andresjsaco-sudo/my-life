@@ -15,8 +15,8 @@ const observer = new IntersectionObserver((entries) => {
 reveals.forEach(el => observer.observe(el));
 
 // Nav active state
-const sections = document.querySelectorAll('section, [id]');
-const navLinks = document.querySelectorAll('nav a');
+const sections = document.querySelectorAll('section[id], [id="hero"], [id="skills"], [id="contact"]');
+const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
   let current = '';
   sections.forEach(section => {
@@ -24,9 +24,31 @@ window.addEventListener('scroll', () => {
     if (window.scrollY >= sectionTop - 200) current = section.getAttribute('id');
   });
   navLinks.forEach(link => {
-    link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--accent)' : '';
+    const href = link.getAttribute('href');
+    const isActive = href === `#${current}`;
+    link.classList.toggle('active', isActive);
   });
 });
+
+// Mobile menu
+const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.querySelector('.nav-menu');
+if (navToggle && navMenu) {
+  navToggle.addEventListener('click', () => {
+    const open = navMenu.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', open);
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+    });
+  });
+}
 
 // Typewriter effect for subtitle
 const subtitle = document.querySelector('.hero-subtitle');
@@ -68,14 +90,13 @@ typeWriter();
 
 // Theme toggle
 const toggle = document.getElementById('theme-toggle');
-
-// Cargar preferencia guardada
-if (localStorage.getItem('theme') === 'light') {
-  document.body.classList.add('light');
-  toggle.checked = true;
+if (toggle) {
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light');
+    toggle.checked = true;
+  }
+  toggle.addEventListener('change', () => {
+    document.body.classList.toggle('light', toggle.checked);
+    localStorage.setItem('theme', toggle.checked ? 'light' : 'dark');
+  });
 }
-
-toggle.addEventListener('change', () => {
-  document.body.classList.toggle('light', toggle.checked);
-  localStorage.setItem('theme', toggle.checked ? 'light' : 'dark');
-});
