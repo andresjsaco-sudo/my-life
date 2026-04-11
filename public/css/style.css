@@ -9,7 +9,7 @@
       --accent2: #c0392b;
       --accent3: #27ae60;
       --text: #b0b0b0;
-      --text-dim: #666666;
+      --text-dim: #7a7a7a;
       --text-bright: #f0f0f0;
       --mono: 'IBM Plex Mono', monospace;
       --display: 'Outfit', sans-serif;
@@ -255,6 +255,10 @@
     h1 .highlight {
       color: transparent;
       -webkit-text-stroke: 1.5px var(--accent);
+      filter: drop-shadow(0 0 22px rgba(232, 160, 32, 0.5)) drop-shadow(0 0 48px rgba(232, 160, 32, 0.15));
+      font-size: 1.18em;
+      display: block;
+      line-height: 1.0;
     }
 
     .hero-subtitle {
@@ -298,7 +302,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 0.85rem 2rem;
-      border-radius: 2px;
+      border-radius: 999px;
       text-decoration: none;
       transition: all 0.2s;
       cursor: pointer;
@@ -427,8 +431,20 @@
       border-radius: 4px;
       filter: grayscale(20%) contrast(1.05);
       border: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
     }
 
+    .about-photo-frame {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: -14px;
+      bottom: -14px;
+      border: 1px solid rgba(232, 160, 32, 0.2);
+      border-radius: 4px;
+      pointer-events: none;
+    }
 
     .about-tags {
       display: flex;
@@ -455,12 +471,6 @@
     /* SKILLS */
     #skills { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 100%; }
     #skills > .inner { max-width: 1200px; margin: 0 auto; padding: 6rem 3rem; }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
 
     .skill-card {
       background: var(--bg3);
@@ -499,9 +509,6 @@
     }
 
 
-    .skill-pill { display: flex; align-items: center; gap: 0.4rem; transition: border-color 0.15s, color 0.15s; }
-    .skill-pill:hover { border-color: var(--accent); color: var(--text-bright); }
-    .skill-pill i { font-size: 1rem; }
     .skill-pill {
       font-family: var(--mono);
       font-size: 0.7rem;
@@ -523,12 +530,6 @@
 
     .skill-pill i {
       font-size: 1rem;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
     }
 
     /* PROJECTS */
@@ -771,7 +772,7 @@
       margin-bottom: 1rem;
       background: var(--bg3);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 50%;
       color: var(--accent);
       font-size: 1.1rem;
       text-decoration: none;
