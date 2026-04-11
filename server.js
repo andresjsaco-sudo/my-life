@@ -1,9 +1,38 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com'],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:'],
+      connectSrc: ["'self'"],
+      frameAncestors: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+    },
+  },
+  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+}));
+
+// Rate limiting
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+}));
 
 // View engine
 app.engine('hbs', engine({
@@ -102,8 +131,8 @@ const data = {
       icon: '✦',
       title: 'Languages',
       pills: [
-        '🇨🇴 Spanish — Native','🇺🇸 English — Fluent','🇫🇷 French — Intermediate',
-        '🇧🇷 Portuguese — Reading','🇹🇷 Turkish — Basic',
+        '🇨🇴 Spanish — Native','🇺🇸 English — B2','🇫🇷 French — B1',
+        '🇧🇷 Portuguese — A1','🇹🇷 Turkish — A1',
       ],
     },
   ],
