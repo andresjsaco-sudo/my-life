@@ -84,17 +84,13 @@ const data = {
     {
       featured: true,
       year: '2026',
-      context: 'Industry project with Corpoacero S.A.S.',
+      context: 'Capstone with Corpoacero S.A.S.',
       title: 'Early corrosion detection for steel plates',
       description: `An industrial monitoring system that detects early corrosion on galvanized and pre-painted
         steel before it is visible to an inspector. Plates are photographed under a fixed capture protocol
         inside ASTM B117 salt spray chambers; images land in S3, a serverless inference function runs a
         YOLOv8 segmentation model through ONNX Runtime, and results feed a React dashboard with a per-plate
         map of the plant.`,
-      role: `Technical lead during the first phase, in an interdisciplinary team of electronic and mechanical
-        engineers. I designed the AWS architecture, wrote the infrastructure as code, set up model training on
-        a dataset of about 32,000 images and built the first dashboard. I have since left the project; the team
-        continues on the architecture I built.`,
       stack: ['YOLOv8-seg', 'ONNX Runtime', 'AWS CDK', 'Lambda', 'S3', 'DynamoDB', 'Cognito', 'API Gateway', 'React', 'Vite'],
       stages: ['sense', 'cloud', 'interface'],
       links: [
@@ -108,7 +104,6 @@ const data = {
         YOLOv8 Nano on-device at 6 to 10 FPS and sends detection coordinates over LTE (SIMCOM A7670SA) with
         MQTT over TLS to AWS IoT Core. Lambda and DynamoDB feed a Next.js dashboard and a Potree point cloud
         viewer with about 300 ms end-to-end latency.`,
-      role: `Built in a team; the dashboard lives in a teammate's repository, which I forked.`,
       stack: ['YOLOv8 Nano', 'Raspberry Pi 4', 'LTE', 'MQTT/TLS', 'AWS IoT Core', 'Lambda', 'DynamoDB', 'AWS CDK', 'Next.js', 'Potree'],
       stages: ['sense', 'compute', 'link', 'cloud', 'interface'],
       links: [
@@ -123,21 +118,17 @@ const data = {
         the glove reads one IR sensor per finger and sends finger states over ESP-NOW with under 10 ms of latency.
         On the hand, an ESP32 drives five HS-645MG servos through a PCA9685 PWM driver, calibrated for an
         accurate 50 Hz output. A button switches the hand into a rock-paper-scissors game mode.`,
-      role: `I built the whole electronic control and teleoperation system, with Kenneth Lascarro on hardware.
-        The 3D-printed hand is a prototype borrowed from a previous year's project.`,
       stack: ['ESP32-S3', 'ESP32', 'ESP-NOW', 'PCA9685', 'I2C', 'Arduino Core 3.x', 'C++'],
       stages: ['sense', 'compute', 'link'],
       links: [],
     },
     {
       year: '2026',
-      context: 'Course project, team of four',
+      context: 'Telematics course',
       title: 'UrbanTrack, GPS vehicle tracking on AWS',
       description: `A GPS tracking web app with live and historical views of a vehicle's route. Separate writer and
         reader services run on EC2 behind a VPC peering link, with PostgreSQL on RDS and a static frontend
         served by Express.`,
-      role: `I built and deployed the cloud side, migrated the reader node to a new AWS account and redesigned
-        the live and history mode selector in the frontend.`,
       stack: ['AWS EC2', 'RDS PostgreSQL', 'VPC Peering', 'Node.js', 'Express', 'JavaScript'],
       stages: ['link', 'cloud', 'interface'],
       links: [
@@ -152,20 +143,18 @@ const data = {
       description: `Design and simulation of a pyramidal horn antenna. A Python tool computes the horn's physical
         dimensions from the operating frequency (1 to 20 GHz) and target gain (10 to 30 dB); the design is
         simulated in CST Microwave Studio for radiation pattern and return loss, with validation planned in an
-        anechoic chamber.`,
-      role: `Editor of the paper, "Diseño y simulación de una antena corneta piramidal para aplicaciones en la
-        banda de las microondas".`,
+        anechoic chamber. Written up as the paper "Diseño y simulación de una antena corneta piramidal para
+        aplicaciones en la banda de las microondas".`,
       stack: ['Python', 'CST Microwave Studio', 'Antenna theory', 'Microwave measurements'],
       stages: ['link'],
       links: [],
     },
     {
-      context: 'Course project with Kenneth Lascarro',
+      context: 'Electronic Design course',
       title: 'Zentro, a handheld arcade on ESP32-S3',
       description: `A pocket arcade console running a custom Asteroids clone on an ESP32-S3 with 8 MB of PSRAM and a
         3.2 inch ILI9341 display over SPI. Includes an animated vector-style title screen, joystick and button
         input, and a non-blocking audio queue that plays music and sound effects without stalling the game loop.`,
-      role: `I wrote all of the software; Kenneth built the hardware.`,
       stack: ['ESP32-S3', 'ILI9341', 'SPI', 'C++', 'Arduino Core 3.x'],
       stages: ['compute', 'interface'],
       links: [],
@@ -179,9 +168,19 @@ const data = {
         Gemini with a Groq fallback, a three-layer memory backed by ChromaDB, and an Electron heads-up display.
         HandNav navigates the desktop with hand gestures, using MediaPipe with a One Euro filter and a ZeroMQ
         pipeline into a transparent overlay.`,
-      role: `Solo build.`,
       stack: ['Python', 'FastAPI', 'Electron', 'MediaPipe', 'ChromaDB', 'ZeroMQ', 'Node.js'],
       stages: ['sense', 'interface'],
+      links: [],
+    },
+    {
+      context: 'Automatic Control course',
+      title: 'Inverted pendulum with PID and lead-lag control',
+      description: `An inverted pendulum stabilized by an ESP32 running a 200 Hz PID loop from encoder feedback.
+        A Python dashboard streams live telemetry, starts and stops the controller and zeroes the reference;
+        lead, lag and lead-lag compensators are designed on the PC, discretized with the Tustin method and sent
+        to the firmware as difference-equation coefficients.`,
+      stack: ['ESP32', 'PID', 'Lead-lag compensation', 'Tustin discretization', 'Python', 'Streamlit'],
+      stages: ['sense', 'compute', 'link', 'interface'],
       links: [],
     },
     {
