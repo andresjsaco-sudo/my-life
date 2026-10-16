@@ -120,7 +120,9 @@ const data = {
         accurate 50 Hz output. A button switches the hand into a rock-paper-scissors game mode.`,
       stack: ['ESP32-S3', 'ESP32', 'ESP-NOW', 'PCA9685', 'I2C', 'Arduino Core 3.x', 'C++'],
       stages: ['sense', 'compute', 'link'],
-      links: [],
+      links: [
+        { label: 'Documentation and schematics', url: 'https://github.com/andresjsaco-sudo/aria-robotic-hand' },
+      ],
     },
     {
       year: '2026',
