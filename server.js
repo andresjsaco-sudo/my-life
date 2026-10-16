@@ -12,8 +12,8 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com'],
-      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+      styleSrc: ["'self'", 'https://fonts.googleapis.com'],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       scriptSrc: ["'self'"],
       imgSrc: ["'self'", 'data:'],
       connectSrc: ["'self'"],
@@ -48,185 +48,239 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ── Data ──────────────────────────────────────────────────────────────────────
+// The five stages of a sensing system. Every project is tagged with the stages
+// it covers; the hero diagram filters the project list by stage.
+const stages = [
+  { key: 'sense', name: 'Sense', detail: 'IR, NTC, cameras' },
+  { key: 'compute', name: 'Compute', detail: 'ESP32, Raspberry Pi' },
+  { key: 'link', name: 'Link', detail: 'Antennas, LTE, ESP-NOW' },
+  { key: 'cloud', name: 'Cloud', detail: 'AWS Lambda, IoT Core' },
+  { key: 'interface', name: 'Interface', detail: 'React, Electron' },
+];
+
 const data = {
   name: 'Juan Andrés Betancourt',
   role: 'Electronic Engineer',
   location: 'Barranquilla, Colombia',
-  university: 'Universidad del Norte',
-  bio: [
-    `I'm a final-year Electronic Engineering student at <strong>Universidad del Norte</strong> in Barranquilla, Colombia.
-     My work sits at the intersection of hardware design, sensor systems, and applied machine learning —
-     building devices that measure the physical world with precision and intelligence.`,
-    `What sets my work apart is that I design from the ground up. I've built operational amplifiers
-     from discrete <strong>BJT transistors</strong>, designed and linearized instrumentation amplifier-based
-     measurement systems, and developed IoT sensor networks with computer vision. When I work on a system,
-     I understand every layer of it.`,
-    `Beyond engineering, I've spent three summers in New Jersey as a leader at <strong>Kiddie Keep Well Camp</strong>,
-     a nonprofit serving children from low-income families — progressing from counselor to Program Director
-     and, in Summer 2026, Assistant Director. Leadership that matters to me as much as the circuits.`,
-    `I was Vice President and later President of the <strong>IEEE RAS chapter</strong> at Uninorte, connecting students 
-     to the frontier of robotics and automation. I speak Spanish natively, English fluently, and can get by in French 
-     and Portuguese.`,
-  ],
-  tags: [
-    { label: 'Instrumentation', accent: 'accent' },
-    { label: 'IoT Systems', accent: 'accent' },
-    { label: 'Machine Learning', accent: 'accent3' },
-    { label: 'Signal Processing', accent: '' },
-    { label: 'Embedded Systems', accent: '' },
-    { label: 'PCB Design', accent: '' },
-    { label: 'AWS Cloud', accent: 'accent2' },
-    { label: 'Computer Vision', accent: 'accent2' },
-    { label: 'F1 Enthusiast', accent: 'accent3' },
-  ],
-  stats: [
-    { number: '4', suffix: '+', label: 'Engineering Projects' },
-    { number: '2', suffix: 'yrs', label: 'IEEE RAS Leadership' },
-    { number: '2', suffix: '', label: 'Countries Worked In' },
-  ],
-  skills: [
+  github: 'https://github.com/andresjsaco-sudo',
+  githubHandle: 'github.com/andresjsaco-sudo',
+
+  credentials: [
     {
-      icon: '<i class="devicon-embeddedc-plain"></i>',
-      title: 'Hardware &amp; Embedded',
-      pills: [
-        'BJT Circuits','Op-Amps','Instrumentation Amps','Signal Conditioning',
-        'SkyWater 130nm PDK','PCB Design','LTSpice','KiCad','Proteus','Multisim',
-        '<i class="devicon-arduino-plain"></i> Arduino','ESP32',
-        '<i class="devicon-raspberrypi-line"></i> Raspberry Pi','SolidWorks','AutoCAD',
-      ],
+      term: 'Graduating 2027',
+      desc: 'B.Sc. Electronic Engineering, Universidad del Norte',
     },
     {
-      icon: '<i class="devicon-python-plain"></i>',
-      title: 'Software &amp; Programming',
-      pills: [
-        '<i class="devicon-python-plain"></i> Python','<i class="devicon-c-plain"></i> C',
-        '<i class="devicon-cplusplus-plain"></i> C++','<i class="devicon-matlab-plain"></i> MATLAB',
-        '<i class="devicon-javascript-plain"></i> JavaScript','<i class="devicon-typescript-plain"></i> TypeScript',
-        '<i class="devicon-react-plain"></i> React','<i class="devicon-nextjs-plain"></i> Next.js',
-        '<i class="devicon-mysql-plain"></i> SQL','<i class="devicon-git-plain"></i> Git',
-        '<i class="devicon-linux-plain"></i> Linux','<i class="devicon-docker-plain"></i> Docker',
-      ],
+      term: 'Saber Pro, 99th percentile',
+      desc: 'National exit exam: 205/300 overall, 300/300 in English',
     },
     {
-      icon: '<i class="devicon-amazonwebservices-plain"></i>',
-      title: 'IoT, Cloud &amp; AI',
-      pills: [
-        'LTE / 4G','MQTT / TLS','Wi-Fi / BLE',
-        '<i class="devicon-amazonwebservices-plain"></i> AWS IoT Core','AWS Lambda',
-        'DynamoDB','AWS CDK','YOLOv8 / CNN','Computer Vision',
-        '<i class="devicon-tensorflow-original"></i> TensorFlow Lite','OpenCV',
-        '<i class="devicon-numpy-plain"></i> NumPy','Scikit-learn',
-      ],
-    },
-    {
-      icon: '⚗️',
-      title: 'Sensors &amp; Instrumentation',
-      pills: [
-        'NTC Thermistors','Electrochemical Sensors','Vision / NIR Systems',
-        'Signal Acquisition','Calibration','FFT / Bode Analysis','Oscilloscope',
-        'Function Generator','Sallen-Key Filter','SNR / Slew Rate','LiDAR / Point Cloud',
-      ],
-    },
-    {
-      icon: '✦',
-      title: 'Languages',
-      pills: [
-        '🇨🇴 Spanish — Native','🇺🇸 English — B2','🇫🇷 French — B1',
-        '🇧🇷 Portuguese — A1','🇹🇷 Turkish — A1',
-      ],
+      term: 'Four US summers',
+      desc: 'Camp leadership in New Jersey, up to Assistant Director',
     },
   ],
+
   projects: [
     {
       featured: true,
-      type: '🔬 Final Degree Project — In Progress',
-      title: 'Early Corrosion Detection System for Steel — IoT + Computer Vision',
-      description: `An interdisciplinary IoT system for detecting early-stage corrosion on steel plates in industrial environments.
-        Developed in collaboration with <strong>Corpoacero</strong> (Barranquilla) and teams from mechanical and
-        electronic engineering. A camera transmits daily images via LTE to a cloud backend where a custom-trained
-        ML model identifies corrosion indicators invisible to the naked eye. Results are visualized on a web app
-        with interactive plant maps showing per-plate status in real time.`,
-      tags: ['Computer Vision','IoT / LTE','Custom ML Model','Industrial Application','Web Dashboard','Corpoacero'],
+      year: '2026',
+      context: 'Industry project with Corpoacero S.A.S.',
+      title: 'Early corrosion detection for steel plates',
+      description: `An industrial monitoring system that detects early corrosion on galvanized and pre-painted
+        steel before it is visible to an inspector. Plates are photographed under a fixed capture protocol
+        inside ASTM B117 salt spray chambers; images land in S3, a serverless inference function runs a
+        YOLOv8 segmentation model through ONNX Runtime, and results feed a React dashboard with a per-plate
+        map of the plant.`,
+      role: `Technical lead during the first phase, in an interdisciplinary team of electronic and mechanical
+        engineers. I designed the AWS architecture, wrote the infrastructure as code, set up model training on
+        a dataset of about 32,000 images and built the first dashboard. I have since left the project; the team
+        continues on the architecture I built.`,
+      stack: ['YOLOv8-seg', 'ONNX Runtime', 'AWS CDK', 'Lambda', 'S3', 'DynamoDB', 'Cognito', 'API Gateway', 'React', 'Vite'],
+      stages: ['sense', 'cloud', 'interface'],
+      links: [
+        { label: 'Dashboard code', url: 'https://github.com/andresjsaco-sudo/Mockup-CorpoAcero-Corrosion' },
+      ],
     },
     {
-      type: 'Communications Lab — Universidad del Norte',
-      title: 'IoT Occupancy Monitoring System with 3D Point Cloud Visualization',
-      description: `End-to-end IoT system for real-time person detection and spatial localization in university classrooms.
-        A Raspberry Pi 4 runs <strong>YOLOv8 Nano</strong> on-device (edge AI) at 6–10 FPS, transmitting
-        detection coordinates via <strong>LTE (SIMCOM A7670SA)</strong> over MQTT/TLS to <strong>AWS IoT Core</strong>.
-        Data flows through Lambda and DynamoDB into a <strong>Next.js dashboard</strong> and a
-        <strong>Potree 3D point cloud viewer</strong>, displaying occupancy in near real-time with ~300ms latency.
-        Infrastructure deployed as code using AWS CDK with a full CI/CD pipeline.`,
-      tags: ['YOLOv8 Nano','Edge AI','Raspberry Pi 4','LTE / MQTT','AWS IoT Core','AWS Lambda','DynamoDB','Potree 3D','Next.js','AWS CDK'],
+      context: 'Communications Lab, Universidad del Norte',
+      title: 'Classroom occupancy with edge AI and a 3D point cloud',
+      description: `Real-time person detection and localization in university classrooms. A Raspberry Pi 4 runs
+        YOLOv8 Nano on-device at 6 to 10 FPS and sends detection coordinates over LTE (SIMCOM A7670SA) with
+        MQTT over TLS to AWS IoT Core. Lambda and DynamoDB feed a Next.js dashboard and a Potree point cloud
+        viewer with about 300 ms end-to-end latency.`,
+      role: `Built in a team; the dashboard lives in a teammate's repository, which I forked.`,
+      stack: ['YOLOv8 Nano', 'Raspberry Pi 4', 'LTE', 'MQTT/TLS', 'AWS IoT Core', 'Lambda', 'DynamoDB', 'AWS CDK', 'Next.js', 'Potree'],
+      stages: ['sense', 'compute', 'link', 'cloud', 'interface'],
+      links: [
+        { label: 'Live dashboard', url: 'https://sensordashboardiot.vercel.app' },
+        { label: 'Code', url: 'https://github.com/andresjsaco-sudo/iot-dashboard' },
+      ],
     },
     {
-      type: 'Measurements & Instrumentation — Universidad del Norte',
-      title: 'NTC Temperature Sensor: Signal Conditioning, Filtering & Linearization',
-      description: `Precision temperature measurement system built around a full instrumentation amplifier circuit. The nonlinear sensor response was mathematically characterized and corrected through hardware-level linearization, achieving high accuracy across the full measurement range.`,
-      tags: ['UA741 Op-Amp','Sallen-Key Filter','Signal Conditioning','NTC Thermistor','PCB Design','LTSpice','SNR 37.6 dB'],
+      context: 'Microcontrollers final project',
+      title: 'Aria, a glove-teleoperated robotic hand',
+      description: `A five-finger robotic hand that copies the wearer's finger movements wirelessly. An ESP32-S3 in
+        the glove reads one IR sensor per finger and sends finger states over ESP-NOW with under 10 ms of latency.
+        On the hand, an ESP32 drives five HS-645MG servos through a PCA9685 PWM driver, calibrated for an
+        accurate 50 Hz output. A button switches the hand into a rock-paper-scissors game mode.`,
+      role: `I built the whole electronic control and teleoperation system, with Kenneth Lascarro on hardware.
+        The 3D-printed hand is a prototype borrowed from a previous year's project.`,
+      stack: ['ESP32-S3', 'ESP32', 'ESP-NOW', 'PCA9685', 'I2C', 'Arduino Core 3.x', 'C++'],
+      stages: ['sense', 'compute', 'link'],
+      links: [],
     },
     {
-      type: '⚙️ Electronics III',
-      title: 'Temperature & Humidity Sensor with BJT-based Op-Amp',
-      description: `Designed and implemented a functional operational amplifier entirely from discrete BJT transistors,
-        then used it as the analog front-end for a temperature and humidity sensing system.
-        A deep-dive into the physics behind the components most engineers treat as black boxes.`,
-      tags: ['BJT Design','Op-Amp from Scratch','Analog Circuits','Sensor Interface'],
+      year: '2026',
+      context: 'Course project, team of four',
+      title: 'UrbanTrack, GPS vehicle tracking on AWS',
+      description: `A GPS tracking web app with live and historical views of a vehicle's route. Separate writer and
+        reader services run on EC2 behind a VPC peering link, with PostgreSQL on RDS and a static frontend
+        served by Express.`,
+      role: `I built and deployed the cloud side, migrated the reader node to a new AWS account and redesigned
+        the live and history mode selector in the frontend.`,
+      stack: ['AWS EC2', 'RDS PostgreSQL', 'VPC Peering', 'Node.js', 'Express', 'JavaScript'],
+      stages: ['link', 'cloud', 'interface'],
+      links: [
+        { label: 'Team repository', url: 'https://github.com/DarwinDiaz07/urbanTrack' },
+      ],
+    },
+    {
+      year: '2026',
+      context: 'Research with Universidad del Norte',
+      status: 'Paper in preparation',
+      title: 'Pyramidal horn antenna for the microwave band',
+      description: `Design and simulation of a pyramidal horn antenna. A Python tool computes the horn's physical
+        dimensions from the operating frequency (1 to 20 GHz) and target gain (10 to 30 dB); the design is
+        simulated in CST Microwave Studio for radiation pattern and return loss, with validation planned in an
+        anechoic chamber.`,
+      role: `Editor of the paper, "Diseño y simulación de una antena corneta piramidal para aplicaciones en la
+        banda de las microondas".`,
+      stack: ['Python', 'CST Microwave Studio', 'Antenna theory', 'Microwave measurements'],
+      stages: ['link'],
+      links: [],
+    },
+    {
+      context: 'Course project with Kenneth Lascarro',
+      title: 'Zentro, a handheld arcade on ESP32-S3',
+      description: `A pocket arcade console running a custom Asteroids clone on an ESP32-S3 with 8 MB of PSRAM and a
+        3.2 inch ILI9341 display over SPI. Includes an animated vector-style title screen, joystick and button
+        input, and a non-blocking audio queue that plays music and sound effects without stalling the game loop.`,
+      role: `I wrote all of the software; Kenneth built the hardware.`,
+      stack: ['ESP32-S3', 'ILI9341', 'SPI', 'C++', 'Arduino Core 3.x'],
+      stages: ['compute', 'interface'],
+      links: [],
+    },
+    {
+      year: '2026',
+      context: 'Personal project',
+      status: 'In progress',
+      title: 'Jarvis and HandNav',
+      description: `Jarvis is a local voice assistant for macOS: double-clap wake detection, Whisper speech-to-text,
+        Gemini with a Groq fallback, a three-layer memory backed by ChromaDB, and an Electron heads-up display.
+        HandNav navigates the desktop with hand gestures, using MediaPipe with a One Euro filter and a ZeroMQ
+        pipeline into a transparent overlay.`,
+      role: `Solo build.`,
+      stack: ['Python', 'FastAPI', 'Electron', 'MediaPipe', 'ChromaDB', 'ZeroMQ', 'Node.js'],
+      stages: ['sense', 'interface'],
+      links: [],
+    },
+    {
+      context: 'Automatic Control',
+      title: 'Inverted pendulum with PID control',
+      description: `A PID-stabilized inverted pendulum on an ESP32, with live telemetry over Bluetooth to a Python
+        dashboard for tuning the controller gains.`,
+      stack: ['ESP32', 'PID', 'Bluetooth', 'Python'],
+      stages: ['sense', 'compute', 'link', 'interface'],
+      links: [],
+    },
+    {
+      context: 'Microcontrollers labs',
+      title: 'ESP32 lab series',
+      description: `A documented set of microcontroller labs on the ESP32 NodeMCU-32S: GPIO, interrupts, timers,
+        PWM, ADC and communication peripherals on ESP32 Arduino Core 3.x.`,
+      stack: ['ESP32', 'C++', 'Arduino Core 3.x'],
+      stages: ['compute'],
+      links: [
+        { label: 'Code', url: 'https://github.com/andresjsaco-sudo/ESP32-NodeMCU-32S' },
+      ],
+    },
+    {
+      context: 'Measurements and Instrumentation',
+      title: 'NTC temperature sensor with hardware linearization',
+      description: `A precision temperature measurement chain built around an instrumentation amplifier. The
+        thermistor's nonlinear response was characterized and corrected in hardware, followed by a Sallen-Key
+        filter, reaching an SNR of 37.6 dB.`,
+      stack: ['Instrumentation amplifier', 'Sallen-Key', 'LTspice', 'PCB design'],
+      stages: ['sense'],
+      links: [],
+    },
+    {
+      context: 'Electronics III',
+      title: 'An op-amp built from discrete BJTs',
+      description: `A working operational amplifier designed entirely from discrete BJT transistors, then used as
+        the analog front end of a temperature and humidity sensor.`,
+      stack: ['BJT design', 'Analog circuits', 'Sensor interface'],
+      stages: ['sense'],
+      links: [],
     },
   ],
-  certifications: [
-    {
-      org: 'Cisco Networking Academy',
-      title: 'Introduction to Cybersecurity',
-      issuer: 'Cisco — Verified Certificate',
-      desc: 'Fundamentals of cybersecurity, network security, and threat detection. Relevant to IoT and connected sensor systems where network security is a critical layer.',
-    },
-  ],
+
   experience: [
     {
-      period: 'Summer 2026 — Upcoming',
-      title: 'Assistant Director',
-      org: 'Kiddie Keep Well Camp — Middlesex County, NJ',
-      desc: `Contracted to join senior leadership as Assistant Director at <strong>Kiddie Keep Well Camp</strong>, a nonprofit residential camp serving children from low-income families. A role earned through four summers of progressive growth within the organization.`,
+      period: '2023 to 2026',
+      title: 'Kiddie Keep Well Camp',
+      org: 'Edison, New Jersey, USA',
+      progression: 'Counselor, Head Counselor, Program Director, Assistant Director',
+      desc: `Four summers at a nonprofit residential camp for children from low-income families, promoted each
+        year. As Program Director I designed and ran the activity curriculum for every age group and led the
+        counselor team; as Assistant Director I joined the camp's senior leadership.`,
     },
     {
-      period: 'Summer 2025',
-      title: 'Program Director',
-      org: 'Kiddie Keep Well Camp — Middlesex County, NJ',
-      desc: 'Designed and managed the full activity curriculum across all age groups. Led a team of counselors, coordinated logistics, and maintained program quality throughout the season.',
+      period: '2026',
+      title: 'Editor and co-author, horn antenna paper',
+      org: 'Universidad del Norte, Prof. Lacides Ripoll',
+      desc: 'Design and simulation of a pyramidal horn antenna for the microwave band. In preparation for publication.',
     },
     {
-      period: 'Summer 2024',
-      title: 'Head Counselor',
-      org: 'Kiddie Keep Well Camp — Middlesex County, NJ',
-      desc: 'Supervised a group of counselors, ensuring camper wellbeing and program consistency. First leadership role within the camp organization.',
-    },
-    {
-      period: 'Summer 2023',
-      title: 'Camp Counselor',
-      org: 'Kiddie Keep Well Camp — Middlesex County, NJ',
-      desc: 'First summer at KKWC via the J1 cultural exchange visa program. Directly responsible for a group of campers, building the foundation of trust and leadership that led to rapid promotion in subsequent years.',
-    },
-    {
-      period: '2023 — 2024',
-      title: 'President, IEEE Robotics & Automation Society',
-      org: 'Universidad del Norte — Barranquilla, Colombia',
-      desc: 'Led the student branch of IEEE RAS at Uninorte, organizing technical workshops, invited talks, and collaborative projects between students and the broader robotics and automation community.',
-    },
-    {
-      period: '2022 — 2023',
-      title: 'Vice President, IEEE Robotics & Automation Society',
-      org: 'Universidad del Norte — Barranquilla, Colombia',
-      desc: 'Supported chapter operations, coordinated events, and helped grow member engagement across robotics, automation, and electronics disciplines.',
+      period: '2022 to 2024',
+      title: 'IEEE Robotics and Automation Society',
+      org: 'Universidad del Norte student chapter',
+      progression: 'Vice President, then President',
+      desc: `Grew the chapter from about 4 to 40 members by organizing technical workshops, invited talks and
+        student projects in robotics and automation.`,
     },
   ],
+
+  skills: [
+    { group: 'Hardware and analog', items: 'Op-amps and instrumentation amplifiers, signal conditioning, active filters, PCB design, KiCad, LTspice, Proteus, SkyWater 130 nm PDK' },
+    { group: 'Embedded', items: 'ESP32 and ESP32-S3, Raspberry Pi 4, Arduino Core 3.x, C, C++, SPI, I2C, PWM, ESP-NOW, BLE' },
+    { group: 'IoT and cloud', items: 'AWS IoT Core, Lambda, DynamoDB, S3, Cognito, API Gateway, EC2, RDS, AWS CDK, MQTT over TLS, LTE modems' },
+    { group: 'Vision and ML', items: 'YOLOv8, ONNX Runtime, OpenCV, MediaPipe, TensorFlow Lite' },
+    { group: 'Software', items: 'Python, JavaScript, TypeScript, React, Next.js, Node.js, Express, SQL, Git, Linux, Docker' },
+    { group: 'Spoken languages', items: 'Spanish (native), English (fluent), French (intermediate), Portuguese (reading), Turkish (basic)' },
+  ],
+
+  certifications: [
+    { title: 'Introduction to Cybersecurity', issuer: 'Cisco Networking Academy' },
+  ],
+
   contact: {
-    email: 'jsaco@uninorte.edu.co',
+    email: 'andresjsaco@gmail.com',
     linkedin: 'https://www.linkedin.com/in/andresjsaco',
     linkedinHandle: 'linkedin.com/in/andresjsaco',
-    location: 'Barranquilla, Colombia',
   },
 };
+
+// Precompute per-project stage markers for the templates.
+data.stages = stages;
+data.projects = data.projects.map((p) => ({
+  ...p,
+  stageList: p.stages.join(' '),
+  stageMarks: stages.map((s) => ({ name: s.name, on: p.stages.includes(s.key) })),
+  stageNames: stages.filter((s) => p.stages.includes(s.key)).map((s) => s.name).join(', '),
+}));
+data.projectCount = data.projects.length;
+data.year = new Date().getFullYear();
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
@@ -234,6 +288,10 @@ app.get('/', (req, res) => {
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`Portfolio running at http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Portfolio running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

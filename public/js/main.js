@@ -1,102 +1,79 @@
-// Scroll reveal
-const reveals = document.querySelectorAll('.reveal');
-reveals.forEach(el => el.classList.add('hidden'));
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.remove('hidden');
-        entry.target.classList.add('animate-in');
-      }, i * 80);
-      observer.unobserve(entry.target);
+// ── Theme toggle ──────────────────────────────────────────────────────────────
+(function () {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  const label = btn.querySelector('.theme-btn-text');
+
+  function current() {
+    const set = root.getAttribute('data-theme');
+    if (set) return set;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function render() {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    label.textContent = next === 'dark' ? 'Dark' : 'Light';
+    btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+  }
+  btn.addEventListener('click', () => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+    render();
+  });
+  render();
+})();
+
+// ── Stage filter: the hero chain filters the project list ─────────────────────
+(function () {
+  const buttons = Array.from(document.querySelectorAll('.chain-btn'));
+  const projects = Array.from(document.querySelectorAll('.project'));
+  const text = document.getElementById('filter-text');
+  const clear = document.getElementById('clear-filter');
+  if (!buttons.length || !projects.length) return;
+  const total = projects.length;
+  let active = null;
+
+  function apply(stage, scroll) {
+    active = stage;
+    let shown = 0;
+    projects.forEach((p) => {
+      const match = !stage || p.dataset.stages.split(' ').includes(stage);
+      p.hidden = !match;
+      if (match) shown++;
+    });
+    buttons.forEach((b) => {
+      const on = b.dataset.stage === stage;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (stage) {
+      const name = buttons.find((b) => b.dataset.stage === stage).querySelector('.chain-name').textContent;
+      text.textContent = shown + ' of ' + total + ' projects include the ' + name + ' stage';
+      clear.hidden = false;
+    } else {
+      text.textContent = 'All ' + total + ' projects';
+      clear.hidden = true;
     }
-  });
-}, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
-reveals.forEach(el => observer.observe(el));
+    if (scroll) {
+      document.getElementById('projects').scrollIntoView({ behavior: prefersReduced() ? 'auto' : 'smooth' });
+    }
+  }
 
-// Nav active state
-const sections = document.querySelectorAll('section[id], [id="hero"], [id="skills"], [id="contact"]');
-const navLinks = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    if (window.scrollY >= sectionTop - 200) current = section.getAttribute('id');
-  });
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    const isActive = href === `#${current}`;
-    link.classList.toggle('active', isActive);
-  });
-});
+  function prefersReduced() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
 
-// Mobile menu
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-menu');
-if (navToggle && navMenu) {
-  navToggle.addEventListener('click', () => {
-    const open = navMenu.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', open);
-    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    document.body.style.overflow = open ? 'hidden' : '';
-  });
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      navMenu.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      navToggle.setAttribute('aria-label', 'Open menu');
-      document.body.style.overflow = '';
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+      const stage = b.dataset.stage;
+      apply(active === stage ? null : stage, active !== stage);
     });
   });
-}
+  clear.addEventListener('click', () => apply(null, false));
+})();
 
-// Typewriter effect for subtitle
-const subtitle = document.querySelector('.hero-subtitle');
-const texts = [
-  'I build things that sense the world',
-  'Instrumentation & IoT Engineer',
-  'IEEE RAS · Uninorte',
-  'From transistors to the cloud'
-];
-let textIndex = 0, charIndex = 0, deleting = false;
-
-function typeWriter() {
-  const currentText = texts[textIndex];
-  const cursor = subtitle.querySelector('.cursor');
-
-  if (!deleting) {
-    if (charIndex < currentText.length) {
-      subtitle.insertBefore(document.createTextNode(currentText[charIndex]), cursor);
-      charIndex++;
-      setTimeout(typeWriter, 60);
-    } else {
-      setTimeout(() => { deleting = true; typeWriter(); }, 2200);
-    }
-  } else {
-    const nodes = Array.from(subtitle.childNodes).filter(n => n.nodeType === 3);
-    if (nodes.length > 0) {
-      nodes[nodes.length - 1].remove();
-      charIndex--;
-      setTimeout(typeWriter, 30);
-    } else {
-      deleting = false;
-      textIndex = (textIndex + 1) % texts.length;
-      setTimeout(typeWriter, 500);
-    }
-  }
-}
-
-typeWriter();
-
-// Theme toggle
-const toggle = document.getElementById('theme-toggle');
-if (toggle) {
-  if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light');
-    toggle.checked = true;
-  }
-  toggle.addEventListener('change', () => {
-    document.body.classList.toggle('light', toggle.checked);
-    localStorage.setItem('theme', toggle.checked ? 'light' : 'dark');
-  });
-}
+// ── Size the one-time signal pulse to the trace width ─────────────────────────
+(function () {
+  const chain = document.querySelector('.chain');
+  if (chain) chain.style.setProperty('--chain-w', chain.offsetWidth + 'px');
+})();

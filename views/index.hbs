@@ -1,194 +1,151 @@
-<!-- NAV -->
-<nav class="nav" role="navigation" aria-label="Main">
-  <a href="#hero" class="nav-logo"><span>~/</span>jab</a>
-  <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-  </button>
-  <div class="nav-menu">
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#certifications">Certs</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <label class="theme-toggle" aria-label="Toggle light/dark theme">
-      <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
-      <span class="theme-toggle-slider">
-        <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">☀</span>
-        <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">◇</span>
-      </span>
-    </label>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="#main" class="wordmark">Juan Andrés Betancourt</a>
+    <nav aria-label="Main">
+      <ul class="nav-links">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-btn" id="theme-btn" aria-label="Switch color theme">
+      <span class="theme-btn-dot" aria-hidden="true"></span>
+      <span class="theme-btn-text">Theme</span>
+    </button>
   </div>
-</nav>
+</header>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-content">
-    <div class="hero-tag">{{role}} · {{location}}</div>
-    <h1>Juan Andrés<br /><span class="highlight">Betancourt</span></h1>
-    <div class="hero-subtitle"><span class="cursor"></span></div>
-    <div class="hero-quote">
-      "The most interesting signals are the ones<br />hiding just below the threshold of perception."
-    </div>
-    <p class="hero-desc">
-      Electronic engineering student at {{university}}, specializing in instrumentation,
-      IoT sensor systems, and machine learning applied to real-world physical problems.
-      I design from the transistor up.
-    </p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">View Projects</a>
-      <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-    </div>
-  </div>
-  <div class="hero-stats">
-    {{#each stats}}
-    <div class="stat">
-      <div class="stat-number">{{number}}<span>{{suffix}}</span></div>
-      <div class="stat-label">{{label}}</div>
-    </div>
-    {{/each}}
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label">01 — About</div>
-  <h2>The engineer<br />behind the circuits</h2>
-  <div class="about-grid">
-    <div class="about-text reveal">
-      {{#each bio}}
-      <p>{{{this}}}</p>
-      {{/each}}
-      <div class="about-tags">
-        {{#each tags}}
-        <span class="tag {{accent}}">{{label}}</span>
-        {{/each}}
-      </div>
-    </div>
-    <div class="about-photo-container reveal">
-      <img
-        src="/images/profile.jpg"
-        alt="{{name}}"
-        class="about-photo"
-        onerror="this.style.display='none'"
-      />
-      <div class="about-photo-frame"></div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<div id="skills">
-  <div class="inner">
-    <div class="section-label">02 — Skills</div>
-    <h2>What I work with</h2>
-    <div class="skills-grid">
-      {{#each skills}}
-      <div class="skill-card reveal">
-        <div class="skill-card-icon">{{{icon}}}</div>
-        <h3>{{{title}}}</h3>
-        <div class="skill-list">
-          {{#each pills}}
-          <span class="skill-pill">{{{this}}}</span>
-          {{/each}}
-        </div>
-      </div>
-      {{/each}}
-    </div>
-  </div>
-</div>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label">03 — Projects</div>
-  <h2>Things I've built</h2>
-  <div class="projects-grid">
-    {{#each projects}}
-    <div class="project-card {{#if featured}}project-featured{{/if}} reveal">
-      <div class="project-type">{{type}}</div>
-      <h3>{{title}}</h3>
-      <p>{{{description}}}</p>
-      <div class="project-tags">
-        {{#each tags}}
-        <span class="project-tag">{{this}}</span>
-        {{/each}}
-      </div>
-    </div>
-    {{/each}}
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications">
-  <div class="section-label">04 — Certifications</div>
-  <h2>Courses & Certs</h2>
-  <div class="timeline">
-    {{#each certifications}}
-    <div class="timeline-item reveal">
-      <div class="timeline-period">{{org}}</div>
-      <div class="timeline-title">{{title}}</div>
-      <div class="timeline-org">{{issuer}}</div>
-      <div class="timeline-desc">{{desc}}</div>
-    </div>
-    {{/each}}
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-label">05 — Experience</div>
-  <h2>Where I've led</h2>
-  <div class="timeline">
-    {{#each experience}}
-    <div class="timeline-item reveal">
-      <div class="timeline-period">{{period}}</div>
-      <div class="timeline-title">{{title}}</div>
-      <div class="timeline-org">{{org}}</div>
-      <div class="timeline-desc">{{{desc}}}</div>
-    </div>
-    {{/each}}
-  </div>
-</section>
-
-<!-- CONTACT -->
-<div id="contact">
-  <div class="inner">
-    <div class="section-label">06 — Contact</div>
-    <div class="contact-grid">
-      <div class="contact-text reveal">
-        <h2>Let's build something that matters</h2>
-        <p>
-          Whether it's a sensor system, a research collaboration, or just a conversation about
-          instrumentation, IoT, or the road to Formula 1 — I'm always open to connecting.
+<main id="main">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-head">
+      <div class="hero-copy">
+        <h1 id="hero-title">I build the whole chain, from the sensor to the screen.</h1>
+        <p class="lede">
+          I'm Juan Andrés, an electronic engineer from Universidad del Norte in Barranquilla, Colombia.
+          I design sensing systems end to end: the analog front end, the firmware, the radio link,
+          the cloud backend and the dashboard someone actually reads.
         </p>
-        <a href="mailto:{{contact.email}}" class="btn btn-primary">Send an Email</a>
-      </div>
-      <div class="contact-links reveal">
-        <a href="{{contact.linkedin}}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" class="contact-link">
-          <span class="contact-link-icon">in</span>
-          <span class="contact-link-text">{{contact.linkedinHandle}}</span>
-          <span class="contact-link-arrow">→</span>
-        </a>
-        <a href="mailto:{{contact.email}}" class="contact-link">
-          <span class="contact-link-icon">@</span>
-          <span class="contact-link-text">{{contact.email}}</span>
-          <span class="contact-link-arrow">→</span>
-        </a>
-        <div class="contact-link" style="cursor:default; opacity:0.5;">
-          <span class="contact-link-icon">📍</span>
-          <span class="contact-link-text">{{contact.location}}</span>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-solid">See projects</a>
+          <a href="mailto:{{contact.email}}" class="btn btn-line">Email me</a>
+          <a href="{{github}}" class="btn btn-text" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
       </div>
+      <img src="/images/profile.jpg" alt="Portrait of Juan Andrés Betancourt" class="portrait" width="220" height="275" />
     </div>
-  </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-  <a href="#hero" class="back-to-top" aria-label="Back to top">↑</a>
-  <p>© 2026 {{name}} — Built with <span>intention</span>.</p>
+    <div class="chain-block">
+      <p class="chain-caption" id="chain-caption">Pick a stage to see the projects where I built it.</p>
+      <ol class="chain" aria-describedby="chain-caption">
+        {{#each stages}}
+        <li class="chain-node">
+          <button type="button" class="chain-btn" data-stage="{{key}}" aria-pressed="false">
+            <span class="chain-pad" aria-hidden="true"></span>
+            <span class="chain-name">{{name}}</span>
+            <span class="chain-detail">{{detail}}</span>
+          </button>
+        </li>
+        {{/each}}
+      </ol>
+    </div>
+
+    <dl class="creds">
+      {{#each credentials}}
+      <div class="cred">
+        <dt>{{term}}</dt>
+        <dd>{{desc}}</dd>
+      </div>
+      {{/each}}
+    </dl>
+  </section>
+
+  <section id="projects" class="section wrap" aria-labelledby="projects-title">
+    <div class="section-head">
+      <h2 id="projects-title">Projects</h2>
+      <p class="filter-status" id="filter-status" aria-live="polite">
+        <span id="filter-text">All {{projectCount}} projects</span>
+        <button type="button" class="clear-btn" id="clear-filter" hidden>Show all</button>
+      </p>
+    </div>
+
+    <ul class="projects">
+      {{#each projects}}
+      <li class="project{{#if featured}} project-featured{{/if}}" data-stages="{{stageList}}">
+        <div class="project-meta">
+          <p class="project-context">{{context}}</p>
+          {{#if year}}<p class="project-year">{{year}}{{#if status}}, {{status}}{{/if}}</p>{{else}}{{#if status}}<p class="project-year">{{status}}</p>{{/if}}{{/if}}
+          <div class="stage-marks" role="img" aria-label="Stages covered: {{stageNames}}">
+            {{#each stageMarks}}<span class="mark{{#if on}} on{{/if}}" title="{{name}}"></span>{{/each}}
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>{{title}}</h3>
+          <p>{{description}}</p>
+          {{#if role}}<p class="project-role"><strong>My part.</strong> {{role}}</p>{{/if}}
+          <p class="project-stack">{{#each stack}}<span>{{this}}</span>{{/each}}</p>
+          {{#if links.length}}
+          <p class="project-links">
+            {{#each links}}<a href="{{url}}" target="_blank" rel="noopener noreferrer">{{label}}</a>{{/each}}
+          </p>
+          {{/if}}
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section id="experience" class="section wrap" aria-labelledby="experience-title">
+    <h2 id="experience-title">Experience</h2>
+    <ol class="timeline">
+      {{#each experience}}
+      <li class="tl-item">
+        <p class="tl-period">{{period}}</p>
+        <div class="tl-body">
+          <h3>{{title}}</h3>
+          <p class="tl-org">{{org}}</p>
+          {{#if progression}}<p class="tl-progression">{{progression}}</p>{{/if}}
+          <p>{{desc}}</p>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </section>
+
+  <section id="skills" class="section wrap" aria-labelledby="skills-title">
+    <h2 id="skills-title">Skills</h2>
+    <dl class="skills">
+      {{#each skills}}
+      <div class="skill-row">
+        <dt>{{group}}</dt>
+        <dd>{{items}}</dd>
+      </div>
+      {{/each}}
+      <div class="skill-row">
+        <dt>Certifications</dt>
+        <dd>{{#each certifications}}{{title}}, {{issuer}}{{/each}}</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section id="contact" class="section contact" aria-labelledby="contact-title">
+    <div class="wrap contact-inner">
+      <div>
+        <h2 id="contact-title">Let's talk</h2>
+        <p class="contact-copy">
+          I'm looking for full-time roles in embedded systems, IoT and cloud starting December 2026,
+          in Barranquilla or remote.
+        </p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:{{contact.email}}"><span>Email</span>{{contact.email}}</a></li>
+        <li><a href="{{contact.linkedin}}" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span>{{contact.linkedinHandle}}</a></li>
+        <li><a href="{{github}}" target="_blank" rel="noopener noreferrer"><span>GitHub</span>{{githubHandle}}</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="footer wrap">
+  <p>&copy; {{year}} {{name}}, {{location}}</p>
 </footer>
