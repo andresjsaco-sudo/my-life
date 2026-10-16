@@ -185,15 +185,6 @@ const data = {
       links: [],
     },
     {
-      context: 'Automatic Control',
-      title: 'Inverted pendulum with PID control',
-      description: `A PID-stabilized inverted pendulum on an ESP32, with live telemetry over Bluetooth to a Python
-        dashboard for tuning the controller gains.`,
-      stack: ['ESP32', 'PID', 'Bluetooth', 'Python'],
-      stages: ['sense', 'compute', 'link', 'interface'],
-      links: [],
-    },
-    {
       context: 'Microcontrollers labs',
       title: 'ESP32 lab series',
       description: `A documented set of microcontroller labs on the ESP32 NodeMCU-32S: GPIO, interrupts, timers,
