@@ -84,7 +84,7 @@ const data = {
     {
       featured: true,
       year: '2026',
-      context: 'Capstone with Corpoacero S.A.S.',
+      context: 'Final degree project',
       title: 'Early corrosion detection for steel plates',
       description: `An industrial monitoring system that detects early corrosion on galvanized and pre-painted
         steel before it is visible to an inspector. Plates are photographed under a fixed capture protocol
@@ -95,6 +95,7 @@ const data = {
       stages: ['sense', 'cloud', 'interface'],
       links: [
         { label: 'Dashboard code', url: 'https://github.com/andresjsaco-sudo/Mockup-CorpoAcero-Corrosion' },
+        { label: 'AWS infrastructure', url: 'https://github.com/andresjsaco-sudo/corria-infra' },
       ],
     },
     {
