@@ -153,7 +153,7 @@ const data = {
       links: [],
     },
     {
-      context: 'Electronic Design course',
+      context: 'Microcontrollers course',
       title: 'Zentro, a handheld arcade on ESP32-S3',
       description: `A pocket arcade console running a custom Asteroids clone on an ESP32-S3 with 8 MB of PSRAM and a
         3.2 inch ILI9341 display over SPI. Includes an animated vector-style title screen, joystick and button
