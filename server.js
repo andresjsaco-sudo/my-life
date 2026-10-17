@@ -60,7 +60,7 @@ const stages = [
 
 const data = {
   name: 'Juan Andrés Betancourt',
-  role: 'Electronic Engineer',
+  role: 'Electronic Engineering student',
   location: 'Barranquilla, Colombia',
   github: 'https://github.com/andresjsaco-sudo',
   githubHandle: 'github.com/andresjsaco-sudo',
