@@ -94,8 +94,8 @@ const data = {
       stack: ['YOLOv8-seg', 'ONNX Runtime', 'AWS CDK', 'Lambda', 'S3', 'DynamoDB', 'Cognito', 'API Gateway', 'React', 'Vite'],
       stages: ['sense', 'cloud', 'interface'],
       links: [
-        { label: 'Dashboard code', url: 'https://github.com/andresjsaco-sudo/Mockup-CorpoAcero-Corrosion' },
-        { label: 'AWS infrastructure', url: 'https://github.com/andresjsaco-sudo/corria-infra' },
+        { label: 'Dashboard code', url: 'https://github.com/andresjsaco-sudo/corrosion-detection-dashboard' },
+        { label: 'AWS infrastructure', url: 'https://github.com/andresjsaco-sudo/corrosion-detection-infra' },
       ],
     },
     {
