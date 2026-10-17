@@ -72,7 +72,7 @@ const data = {
     },
     {
       term: 'Saber Pro, 99th percentile',
-      desc: 'National exit exam: 205/300 overall, 300/300 in English',
+      desc: 'Colombia\'s national exit exam for university students',
     },
     {
       term: 'Four US summers',
@@ -187,17 +187,6 @@ const data = {
       links: [],
     },
     {
-      context: 'Microcontrollers labs',
-      title: 'ESP32 lab series',
-      description: `A documented set of microcontroller labs on the ESP32 NodeMCU-32S: GPIO, interrupts, timers,
-        PWM, ADC and communication peripherals on ESP32 Arduino Core 3.x.`,
-      stack: ['ESP32', 'C++', 'Arduino Core 3.x'],
-      stages: ['compute'],
-      links: [
-        { label: 'Code', url: 'https://github.com/andresjsaco-sudo/ESP32-NodeMCU-32S' },
-      ],
-    },
-    {
       context: 'Measurements and Instrumentation',
       title: 'NTC temperature sensor with hardware linearization',
       description: `A precision temperature measurement chain built around an instrumentation amplifier. The
@@ -246,11 +235,11 @@ const data = {
 
   skills: [
     { group: 'Hardware and analog', items: 'Op-amps and instrumentation amplifiers, signal conditioning, active filters, PCB design, KiCad, LTspice, Proteus, SkyWater 130 nm PDK' },
-    { group: 'Embedded', items: 'ESP32 and ESP32-S3, Raspberry Pi 4, Arduino Core 3.x, C, C++, SPI, I2C, PWM, ESP-NOW, BLE' },
+    { group: 'Embedded', items: 'ESP32 and ESP32-S3, Raspberry Pi 4, Arduino Core 3.x, C, C++, SPI, I2C, PWM, ADC, ESP-NOW, BLE' },
     { group: 'IoT and cloud', items: 'AWS IoT Core, Lambda, DynamoDB, S3, Cognito, API Gateway, EC2, RDS, AWS CDK, MQTT over TLS, LTE modems' },
     { group: 'Vision and ML', items: 'YOLOv8, ONNX Runtime, OpenCV, MediaPipe, TensorFlow Lite' },
     { group: 'Software', items: 'Python, JavaScript, TypeScript, React, Next.js, Node.js, Express, SQL, Git, Linux, Docker' },
-    { group: 'Spoken languages', items: 'Spanish (native), English (fluent), French (intermediate), Portuguese (reading), Turkish (basic)' },
+    { group: 'Spoken languages', items: 'Spanish (native), English (B2), French (B1), Portuguese (A2), Turkish (A1)' },
   ],
 
   certifications: [
