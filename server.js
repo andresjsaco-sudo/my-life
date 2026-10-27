@@ -154,6 +154,7 @@ const data = {
       links: [
         { label: 'Interactive map', url: '/lte/' },
         { label: 'Report (PDF, Spanish)', url: '/lte/LTE_coverage_report_ES.pdf' },
+        { label: 'Code and data', url: 'https://github.com/andresjsaco-sudo/lte-network-design' },
       ],
     },
     {
