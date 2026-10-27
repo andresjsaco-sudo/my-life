@@ -15,7 +15,7 @@ app.use(helmet({
       styleSrc: ["'self'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       scriptSrc: ["'self'"],
-      imgSrc: ["'self'", 'data:'],
+      imgSrc: ["'self'", 'data:', 'https://*.basemaps.cartocdn.com'],
       connectSrc: ["'self'"],
       frameAncestors: ["'none'"],
       baseUri: ["'self'"],
@@ -136,6 +136,24 @@ const data = {
       stages: ['link', 'cloud', 'interface'],
       links: [
         { label: 'Team repository', url: 'https://github.com/DarwinDiaz07/urbanTrack' },
+      ],
+    },
+    {
+      year: '2026',
+      context: 'Cellular Communications course',
+      status: 'In progress',
+      title: 'LTE network design for two localities of Bogotá',
+      description: `Coverage dimensioning of an LTE network for the urban area of San Cristóbal and Usme, 47.68 km²
+        across 12 zoning units. Downlink and uplink link budgets for band 2 (1900 MHz FDD, 20 MHz) with the
+        COST-231 Hata model give an uplink-limited cell radius of 561 m, which leads to 78 three-sector eNBs on a
+        hexagonal grid with 842 m between sites, covering 97.4% of the area. Each site is specified with Ericsson
+        baseband and radio units and CommScope antennas, and delivered as a Google Earth KML. Capacity
+        dimensioning comes next.`,
+      stack: ['LTE', 'Link budget', 'COST-231 Hata', 'RF planning', 'Python', 'KML', 'LaTeX', 'Leaflet'],
+      stages: ['link'],
+      links: [
+        { label: 'Interactive map', url: '/lte/' },
+        { label: 'Report (PDF, Spanish)', url: '/lte/LTE_coverage_report_ES.pdf' },
       ],
     },
     {

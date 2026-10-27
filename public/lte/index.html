@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LTE Coverage Map, San Cristóbal and Usme</title>
+<meta name="description" content="Interactive map of an LTE coverage design with 78 eNBs for San Cristóbal and Usme, Bogotá.">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="map.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="titles">
+      <a class="back" href="https://andresjsaco.vercel.app">Juan Andrés Betancourt</a>
+      <h1>LTE coverage design: San Cristóbal and Usme, Bogotá</h1>
+    </div>
+    <ul class="stats">
+      <li><b>78</b> three-sector eNBs</li>
+      <li>Band 2 FDD, <b>20 MHz</b></li>
+      <li>Effective radius <b>561 m</b>, uplink limited</li>
+      <li>Inter-site distance <b>842 m</b></li>
+      <li><b>97.4%</b> of 47.68 km² covered</li>
+    </ul>
+  </header>
+  <div id="map" role="application" aria-label="Map of eNB sites and sector footprints"></div>
+</div>
+<script src="vendor/leaflet.js"></script>
+<script src="map.js"></script>
+</body>
+</html>
