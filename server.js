@@ -15,7 +15,7 @@ app.use(helmet({
       styleSrc: ["'self'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       scriptSrc: ["'self'"],
-      imgSrc: ["'self'", 'data:', 'https://*.basemaps.cartocdn.com'],
+      imgSrc: ["'self'", 'data:', 'https://tile.openstreetmap.org'],
       connectSrc: ["'self'"],
       frameAncestors: ["'none'"],
       baseUri: ["'self'"],
