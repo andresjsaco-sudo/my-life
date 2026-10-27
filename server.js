@@ -140,7 +140,7 @@ const data = {
     },
     {
       year: '2026',
-      context: 'Cellular Communications course',
+      context: 'Cellular Systems course',
       status: 'In progress',
       title: 'LTE network design for two localities of Bogotá',
       description: `Coverage dimensioning of an LTE network for the urban area of San Cristóbal and Usme, 47.68 km²
