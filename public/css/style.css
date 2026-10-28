@@ -609,3 +609,34 @@ body { background-image: radial-gradient(var(--grid) 1px, transparent 1.2px); ba
 /* Skills: one direction, one calm speed */
 .marquee-track, .marquee-rev .marquee-track { animation-direction: normal; animation-duration: 70s; }
 .marquee-wrap { gap: 10px; }
+
+/* ── v8: navigation ─────────────────────────────────────────────────────────── */
+.topbar { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s ease; }
+.topbar.is-scrolled { border-bottom-color: var(--line); }
+.topbar-inner { flex-wrap: nowrap; gap: 16px; }
+.brand { flex: none; }
+.mainnav { margin-left: auto; }
+.nav { gap: 4px; flex-wrap: nowrap; }
+.nav a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border-radius: 8px; color: var(--muted); transition: color .15s ease, background-color .15s ease; }
+.nav a:hover { color: var(--ink); background: var(--line); }
+.nav a[aria-current="page"] { color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line-2); }
+.nav-cv-mobile { display: none; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; flex: none; }
+.topbar-actions .nav-cv { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: 8px; font-family: var(--mono); font-size: 12.5px; color: var(--ink); text-decoration: none; }
+.topbar-actions .nav-cv:hover, .theme-btn:hover, .menu-btn:hover { border-color: var(--accent); }
+.theme-btn, .menu-btn { border-radius: 8px; }
+.menu-btn { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; border: 1px solid var(--line-2); background: transparent; color: var(--ink); cursor: pointer; }
+.menu-btn svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+html { scroll-padding-top: 80px; }
+
+@media (max-width: 760px) {
+  .topbar-inner { position: relative; }
+  .brand span { font-size: 14px; }
+  .topbar-actions .nav-cv { display: none; }
+  .menu-btn { display: inline-flex; }
+  .mainnav { position: absolute; top: calc(100% + 6px); left: var(--gutter); right: var(--gutter); margin: 0; }
+  .nav { display: none; flex-direction: column; align-items: stretch; gap: 2px; padding: 8px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface); box-shadow: 0 16px 40px rgba(0,0,0,.18); }
+  .nav.is-open { display: flex; }
+  .nav a { display: flex; min-height: 44px; font-size: 16px; }
+  .nav-cv-mobile { display: block; }
+}

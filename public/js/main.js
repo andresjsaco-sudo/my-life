@@ -102,3 +102,26 @@
   }
   buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.filter); }); });
 })();
+
+// ── Navigation: mobile menu and header border on scroll ───────────────────────
+(function () {
+  const btn = document.getElementById('menu-btn');
+  const list = document.getElementById('nav-links');
+  const bar = document.querySelector('.topbar');
+  if (btn && list) {
+    function setOpen(open) {
+      list.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    btn.addEventListener('click', function () { setOpen(!list.classList.contains('is-open')); });
+    list.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.topbar')) setOpen(false); });
+  }
+  if (bar) {
+    const onScroll = function () { bar.classList.toggle('is-scrolled', window.scrollY > 8); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+})();
