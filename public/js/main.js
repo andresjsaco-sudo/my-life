@@ -84,3 +84,23 @@
     });
   });
 })();
+
+// ── Projects index: filter by area ────────────────────────────────────────────
+(function () {
+  const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+  const items = Array.from(document.querySelectorAll('.pitem'));
+  const status = document.getElementById('filter-status');
+  if (!buttons.length || !items.length) return;
+
+  function apply(key) {
+    let shown = 0;
+    items.forEach(function (item) {
+      const match = key === 'all' || item.dataset.areas.split(' ').indexOf(key) !== -1;
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.filter === key ? 'true' : 'false'); });
+    if (status) status.textContent = key === 'all' ? '' : 'Showing ' + shown + ' of ' + items.length + ' projects';
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.filter); }); });
+})();

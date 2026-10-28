@@ -1,0 +1,62 @@
+<main id="main" class="wrap">
+  <section class="page-head about-head" aria-labelledby="page-title">
+    <div class="about-copy">
+      <p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span>About</p>
+      <h1 id="page-title">About me</h1>
+      <div class="bio">
+        {{#each bio}}<p>{{this}}</p>{{/each}}
+      </div>
+      <div class="actions">
+        <a href="{{person.cv}}" class="btn btn-solid">Download CV (PDF)</a>
+        <a href="{{person.linkedin}}" class="btn btn-line" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <figure class="about-photo">
+      {{> portrait cls="about-img" sizes="(max-width: 820px) 100vw, 400px"}}
+      <figcaption>Barranquilla, Colombia</figcaption>
+    </figure>
+  </section>
+
+  <section class="doc" aria-labelledby="exp-title">
+    <h2 id="exp-title"><span>01</span>Experience</h2>
+    <div class="doc-body">
+      <ol class="timeline">
+        {{#each experience}}
+        <li>
+          <p class="tl-when">{{period}}, {{place}}</p>
+          <h3>{{title}}</h3>
+          <p class="tl-role">{{role}}</p>
+          <p>{{desc}}</p>
+        </li>
+        {{/each}}
+      </ol>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="edu-title">
+    <h2 id="edu-title"><span>02</span>Education</h2>
+    <div class="doc-body">
+      <h3 class="edu-title">B.Sc. in Electronic Engineering, Universidad del Norte</h3>
+      <p>Coursework completed in December 2026; degree expected in September 2027. Saber Pro, Colombia's national exit exam: 99th percentile.</p>
+      <p class="muted">Relevant coursework: Microcontrollers, Telematics, Communications, Antennas and Radio Links, Cellular Systems, Automatic Control, Measurements and Instrumentation.</p>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="skills-title">
+    <h2 id="skills-title"><span>03</span>Skills</h2>
+    <div class="doc-body">
+      <dl class="kv">
+        {{#each skills}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
+      </dl>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="lang-title">
+    <h2 id="lang-title"><span>04</span>Languages</h2>
+    <div class="doc-body">
+      <dl class="langs">
+        {{#each languages}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
+      </dl>
+    </div>
+  </section>
+</main>

@@ -25,6 +25,7 @@
   <a href="#main" class="skip-link">Skip to content</a>
   {{> header}}
   {{{body}}}
+  {{#unless hideContact}}{{> contact}}{{/unless}}
   {{> footer}}
   <script src="/js/main.js" defer></script>
 </body>

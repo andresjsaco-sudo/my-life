@@ -50,7 +50,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1h' }));
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const person = {
@@ -69,76 +69,177 @@ const facts = [
   { k: 'Languages', v: 'ES, EN, FR, PT' },
 ];
 
-// Featured work: shown as cards on the home page.
-const featured = [
+const areas = [
+  { key: 'embedded', label: 'Embedded' },
+  { key: 'rf', label: 'RF and telecom' },
+  { key: 'cloud', label: 'Cloud and IoT' },
+  { key: 'vision', label: 'Vision and ML' },
+  { key: 'control', label: 'Control' },
+  { key: 'analog', label: 'Analog' },
+];
+
+// Every project. `featured` ones appear as cards on the home page.
+const projects = [
   {
-    meta: '2026, in progress / Cellular Systems',
+    featured: true,
+    year: '2026',
+    status: 'In progress',
+    context: 'Cellular Systems course',
     title: 'LTE network design for two localities of Bogotá',
     summary: 'Coverage dimensioning in band 2 for 47.68 km², from the link budget to 78 sites placed on the map.',
+    description: 'Coverage dimensioning of an LTE network for the urban area of San Cristóbal and Usme, 47.68 km² across 12 zoning units. Downlink and uplink link budgets for band 2 (1900 MHz FDD, 20 MHz) with the COST-231 Hata model give an uplink-limited cell radius of 561 m, which leads to 78 three-sector eNBs on a hexagonal grid with 842 m between sites, covering 97.4% of the area. Capacity dimensioning comes next.',
     specs: [{ k: 'sites', v: '78' }, { k: 'cell radius', v: '561 m' }, { k: 'coverage', v: '97.4%' }],
-    tags: 'RF planning, Python, KML',
+    stack: ['LTE', 'Link budget', 'COST-231 Hata', 'Python', 'KML', 'Leaflet'],
+    areas: ['rf'],
     caseStudy: '/projects/lte',
+    links: [
+      { label: 'Case study', url: '/projects/lte' },
+      { label: 'Code and data', url: 'https://github.com/andresjsaco-sudo/lte-network-design' },
+    ],
   },
   {
-    meta: '2026 / Final degree project',
+    featured: true,
+    year: '2026',
+    context: 'Final degree project',
     title: 'Early corrosion detection for steel plates',
     summary: 'YOLOv8 segmentation in a serverless AWS backend, with a dashboard that maps every plate in the plant.',
+    description: 'An industrial monitoring system that detects early corrosion on galvanized and pre-painted steel before it is visible to an inspector. Plates are photographed under a fixed capture protocol inside ASTM B117 salt spray chambers; images land in S3, a serverless inference function runs a YOLOv8 segmentation model through ONNX Runtime, and results feed a React dashboard with a per-plate map of the plant.',
     specs: [{ k: 'model', v: 'YOLOv8' }, { k: 'images', v: '~32k' }, { k: 'lambdas', v: '6' }],
-    tags: 'ML, AWS CDK, React',
+    stack: ['YOLOv8-seg', 'ONNX Runtime', 'AWS CDK', 'Lambda', 'S3', 'DynamoDB', 'Cognito', 'React'],
+    areas: ['vision', 'cloud'],
     links: [
       { label: 'Dashboard code', url: 'https://github.com/andresjsaco-sudo/corrosion-detection-dashboard' },
       { label: 'Infrastructure', url: 'https://github.com/andresjsaco-sudo/corrosion-detection-infra' },
     ],
   },
   {
-    meta: '2025 / Communications Lab',
+    featured: true,
+    year: '2025',
+    context: 'Communications Lab, Universidad del Norte',
     title: 'Classroom occupancy with edge AI',
     summary: 'On-device person detection on a Raspberry Pi 4, reported over LTE and MQTT/TLS to AWS IoT Core and a 3D point cloud.',
+    description: 'Real-time person detection and localization in university classrooms. A Raspberry Pi 4 runs YOLOv8 Nano on-device at 6 to 10 FPS and sends detection coordinates over LTE (SIMCOM A7670SA) with MQTT over TLS to AWS IoT Core. Lambda and DynamoDB feed a Next.js dashboard and a Potree point cloud viewer with about 300 ms of latency.',
     specs: [{ k: 'on-device', v: '6-10 fps' }, { k: 'latency', v: '~300 ms' }, { k: 'link', v: 'LTE' }],
-    tags: 'Edge AI, IoT',
+    stack: ['YOLOv8 Nano', 'Raspberry Pi 4', 'LTE', 'MQTT/TLS', 'AWS IoT Core', 'Lambda', 'Next.js'],
+    areas: ['vision', 'cloud', 'embedded', 'rf'],
     links: [
       { label: 'Live dashboard', url: 'https://sensordashboardiot.vercel.app' },
       { label: 'Code', url: 'https://github.com/andresjsaco-sudo/iot-dashboard' },
     ],
   },
   {
-    meta: '2026 / Microcontrollers',
+    featured: true,
+    year: '2026',
+    context: 'Microcontrollers final project',
     title: 'Aria, a glove-teleoperated robotic hand',
     summary: 'An ESP32-S3 glove reads one IR sensor per finger and drives five servos on the hand over ESP-NOW.',
+    description: 'A five-finger robotic hand that copies the wearer\'s finger movements wirelessly. An ESP32-S3 in the glove reads one IR sensor per finger and sends finger states over ESP-NOW with under 10 ms of latency. On the hand, an ESP32 drives five HS-645MG servos through a PCA9685 PWM driver calibrated for an accurate 50 Hz output.',
     specs: [{ k: 'latency', v: '<10 ms' }, { k: 'servos', v: '5' }, { k: 'pwm', v: '50 Hz' }],
-    tags: 'Embedded, C++',
+    stack: ['ESP32-S3', 'ESP32', 'ESP-NOW', 'PCA9685', 'I2C', 'C++'],
+    areas: ['embedded'],
     links: [
-      { label: 'Schematics', url: 'https://github.com/andresjsaco-sudo/aria-robotic-hand' },
+      { label: 'Documentation and schematics', url: 'https://github.com/andresjsaco-sudo/aria-robotic-hand' },
     ],
   },
-];
+  {
+    year: '2026',
+    context: 'Telematics course',
+    title: 'UrbanTrack, GPS vehicle tracking on AWS',
+    description: 'A GPS tracking web app with live and historical views of a vehicle\'s route. Separate writer and reader services run on EC2 behind a VPC peering link, with PostgreSQL on RDS and a static frontend served by Express.',
+    stack: ['AWS EC2', 'RDS PostgreSQL', 'VPC Peering', 'Node.js', 'Express'],
+    areas: ['cloud'],
+    links: [{ label: 'Repository', url: 'https://github.com/DarwinDiaz07/urbanTrack' }],
+  },
+  {
+    year: '2026',
+    status: 'Paper in preparation',
+    context: 'Research, Universidad del Norte',
+    title: 'Pyramidal horn antenna for the microwave band',
+    description: 'A Python tool computes the horn\'s physical dimensions from the operating frequency (1 to 20 GHz) and target gain (10 to 30 dB); the design is simulated in CST Microwave Studio for radiation pattern and return loss, with validation planned in an anechoic chamber.',
+    stack: ['Python', 'CST Microwave Studio', 'Antenna theory'],
+    areas: ['rf'],
+    links: [],
+  },
+  {
+    context: 'Automatic Control course',
+    title: 'Inverted pendulum with PID and lead-lag control',
+    description: 'An inverted pendulum stabilized by an ESP32 running a 200 Hz PID loop from encoder feedback. A Python dashboard streams live telemetry; lead, lag and lead-lag compensators are designed on the PC, discretized with the Tustin method and sent to the firmware as difference-equation coefficients.',
+    stack: ['ESP32', 'PID', 'Lead-lag', 'Tustin discretization', 'Python', 'Streamlit'],
+    areas: ['control', 'embedded'],
+    links: [],
+  },
+  {
+    context: 'Microcontrollers course',
+    title: 'Zentro, a handheld arcade on ESP32-S3',
+    description: 'A pocket arcade console running a custom Asteroids clone on an ESP32-S3 with 8 MB of PSRAM and a 3.2 inch ILI9341 display over SPI, with joystick input and a non-blocking audio queue that plays music and effects without stalling the game loop.',
+    stack: ['ESP32-S3', 'ILI9341', 'SPI', 'C++'],
+    areas: ['embedded'],
+    links: [],
+  },
+  {
+    year: '2026',
+    status: 'In progress',
+    context: 'Personal project',
+    title: 'Jarvis and HandNav',
+    description: 'Jarvis is a local voice assistant for macOS: double-clap wake detection, Whisper speech-to-text, Gemini with a Groq fallback, a three-layer memory backed by ChromaDB and an Electron heads-up display. HandNav navigates the desktop with hand gestures, using MediaPipe with a One Euro filter.',
+    stack: ['Python', 'FastAPI', 'Electron', 'MediaPipe', 'ChromaDB', 'ZeroMQ'],
+    areas: ['vision'],
+    links: [],
+  },
+  {
+    context: 'Measurements and Instrumentation',
+    title: 'NTC temperature sensor with hardware linearization',
+    description: 'A precision temperature measurement chain built around an instrumentation amplifier. The thermistor\'s nonlinear response was characterized and corrected in hardware, followed by a Sallen-Key filter, reaching an SNR of 37.6 dB.',
+    stack: ['Instrumentation amplifier', 'Sallen-Key', 'LTspice', 'PCB design'],
+    areas: ['analog'],
+    links: [],
+  },
+  {
+    context: 'Electronics III',
+    title: 'An op-amp built from discrete BJTs',
+    description: 'A working operational amplifier designed entirely from discrete BJT transistors, then used as the analog front end of a temperature and humidity sensor.',
+    stack: ['BJT design', 'Analog circuits', 'Sensor interface'],
+    areas: ['analog'],
+    links: [],
+  },
+].map((p, i) => ({
+  ...p,
+  num: String(i + 1).padStart(2, '0'),
+  areaList: p.areas.join(' '),
+  areaLabels: p.areas.map((k) => areas.find((a) => a.key === k).label).join(', '),
+  when: [p.year, p.status].filter(Boolean).join(', '),
+}));
 
-// Everything else, listed compactly.
-const more = [
-  { title: 'UrbanTrack, GPS vehicle tracking on AWS', tag: 'Cloud / 2026', url: 'https://github.com/DarwinDiaz07/urbanTrack' },
-  { title: 'Pyramidal horn antenna, paper in preparation', tag: 'RF / 2026' },
-  { title: 'Inverted pendulum with PID and lead-lag control', tag: 'Control' },
-  { title: 'Zentro, a handheld arcade on ESP32-S3', tag: 'Embedded' },
-  { title: 'Jarvis and HandNav, voice and gesture control', tag: 'Software / 2026' },
-  { title: 'NTC temperature sensor with hardware linearization', tag: 'Analog' },
-  { title: 'An op-amp built from discrete BJTs', tag: 'Analog' },
+const featured = projects.filter((p) => p.featured);
+
+const bio = [
+  'I\'m Juan Andrés, a final-year Electronic Engineering student at Universidad del Norte in Barranquilla, Colombia. My coursework ends in December 2026 and I graduate in September 2027.',
+  'Most of my work sits where hardware meets software: sensors and analog front ends, firmware for ESP32 and Raspberry Pi, radio links, and the cloud services that collect the data. I have built an operational amplifier from discrete BJTs, linearized a thermistor in hardware, planned an LTE network for two localities of Bogotá and deployed serverless computer vision on AWS.',
+  'For four summers I worked at Kiddie Keep Well Camp in New Jersey, a nonprofit residential camp for children from low-income families, moving up from counselor to Program Director and, in 2026, Assistant Director. Leading a team there matters to me as much as the circuits.',
+  'Before that I was Vice President and then President of the IEEE Robotics and Automation Society chapter at Uninorte. I speak Spanish natively, English at a B2 level, French at B1 and some Portuguese, and outside engineering I follow Formula 1 closely.',
 ];
 
 const experience = [
   {
-    period: 'Summers 2023 to 2026, Edison, NJ',
-    title: 'Kiddie Keep Well Camp, Counselor to Assistant Director',
-    desc: 'Promoted every season at a nonprofit residential camp for children from low-income families. As Program Director I designed the activity curriculum and led the counselor team, working in English.',
+    period: 'Summers 2023 to 2026',
+    place: 'Edison, New Jersey, USA',
+    title: 'Kiddie Keep Well Camp',
+    role: 'Counselor, Head Counselor, Program Director, Assistant Director',
+    desc: 'Promoted every season at a nonprofit residential camp for children from low-income families. As Program Director I designed the activity curriculum for every age group and led the counselor team; as Assistant Director I joined the camp\'s senior leadership. All of it in English.',
   },
   {
-    period: '2026, Universidad del Norte',
-    title: 'Editor and co-author, horn antenna paper',
+    period: '2026',
+    place: 'Universidad del Norte',
+    title: 'Horn antenna paper',
+    role: 'Editor and co-author',
     desc: 'Design and simulation of a pyramidal horn antenna for the microwave band, in preparation for publication.',
   },
   {
-    period: '2022 to 2024, Barranquilla',
-    title: 'IEEE RAS Student Chapter, Vice President and President',
-    desc: 'Grew the Uninorte chapter from about 4 to 40 members through technical workshops, invited talks and student projects.',
+    period: '2022 to 2024',
+    place: 'Barranquilla',
+    title: 'IEEE Robotics and Automation Society, Uninorte',
+    role: 'Vice President, then President',
+    desc: 'Grew the student chapter from about 4 to 40 members through technical workshops, invited talks and student projects.',
   },
 ];
 
@@ -149,6 +250,13 @@ const skills = [
   { k: 'Software', v: 'Python, JavaScript, TypeScript, SQL, React, Next.js, Node.js, Git, Linux, Docker' },
   { k: 'Vision and ML', v: 'YOLOv8, ONNX Runtime, OpenCV, MediaPipe, TensorFlow Lite' },
   { k: 'Hardware and control', v: 'KiCad, LTspice, PCB design, PID and lead-lag control, MATLAB' },
+];
+
+const languages = [
+  { k: 'Spanish', v: 'Native' },
+  { k: 'English', v: 'B2' },
+  { k: 'French', v: 'B1' },
+  { k: 'Portuguese', v: 'A2' },
 ];
 
 const lteCase = {
@@ -176,14 +284,24 @@ app.get('/', (req, res) => {
     title: 'Juan Andrés Betancourt, Electronic Engineer',
     description: 'Electronic engineer in Barranquilla, Colombia, working on embedded systems, wireless links and cloud. Available full time from December 2026.',
     canonical: `${SITE_URL}/`,
-    person, facts, featured, more, experience, skills, lte,
-    projectCount: featured.length + more.length,
+    person, facts, featured, lte, bioIntro: bio[0],
+    projectCount: projects.length,
+  });
+});
+
+app.get('/projects', (req, res) => {
+  res.render('projects', {
+    page: 'projects',
+    title: 'Projects, Juan Andrés Betancourt',
+    description: 'Embedded systems, RF and telecom, cloud, computer vision, control and analog projects by Juan Andrés Betancourt.',
+    canonical: `${SITE_URL}/projects`,
+    person, projects, areas,
   });
 });
 
 app.get('/projects/lte', (req, res) => {
   res.render('project-lte', {
-    page: 'work',
+    page: 'projects',
     title: 'LTE network design for San Cristóbal and Usme, Juan Andrés Betancourt',
     description: 'Case study: coverage dimensioning of an LTE network in band 2 for two localities of Bogotá, from the link budget to 78 sites on the map.',
     canonical: `${SITE_URL}/projects/lte`,
@@ -191,10 +309,21 @@ app.get('/projects/lte', (req, res) => {
   });
 });
 
+app.get('/about', (req, res) => {
+  res.render('about', {
+    page: 'about',
+    title: 'About, Juan Andrés Betancourt',
+    description: 'Electronic Engineering student at Universidad del Norte in Barranquilla, Colombia. Experience, skills and languages.',
+    canonical: `${SITE_URL}/about`,
+    person, bio, experience, skills, languages,
+  });
+});
+
 app.use((req, res) => {
   res.status(404).render('404', {
     title: 'Page not found, Juan Andrés Betancourt',
     description: 'This page does not exist.',
+    hideContact: true,
     person,
   });
 });
