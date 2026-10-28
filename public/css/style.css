@@ -595,3 +595,17 @@ a.more-title:hover { color: var(--accent); }
   .marquee-track { animation: none; flex-wrap: wrap; width: auto; }
   .marquee-track [aria-hidden="true"] { display: none; }
 }
+
+/* ── v7: continuous page, dotted texture everywhere, new mark ───────────────── */
+body { background-image: radial-gradient(var(--grid) 1px, transparent 1.2px); background-size: 18px 18px; }
+.topbar { background: transparent; }
+.hero2 { border-bottom: 0; overflow: visible; }
+.hero2-map { background-image: none; }
+.mark-bg { fill: var(--ink); }
+.mark-j { fill: none; stroke: var(--bg); stroke-width: 3; stroke-linecap: round; }
+.mark-dot { fill: var(--accent); }
+.footer-base { border-top: 0; }
+
+/* Skills: one direction, one calm speed */
+.marquee-track, .marquee-rev .marquee-track { animation-direction: normal; animation-duration: 70s; }
+.marquee-wrap { gap: 10px; }
