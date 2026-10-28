@@ -1,0 +1,22 @@
+<main id="main" class="wrap narrow">
+  <p class="crumbs"><a href="/projects">Projects</a><span aria-hidden="true">/</span>{{project.areaLabels}}</p>
+  <h1 class="detail-title">{{project.title}}</h1>
+  <p class="detail-meta">{{#if project.when}}{{project.when}} / {{/if}}{{project.context}}</p>
+
+  {{#if project.specs}}
+  <dl class="detail-specs">{{#each project.specs}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}</dl>
+  {{/if}}
+
+  <p class="detail-text">{{project.description}}</p>
+
+  <p class="detail-stack">{{#each project.stack}}<span>{{this}}</span>{{/each}}</p>
+
+  {{#if project.links.length}}
+  <p class="detail-links">{{#each project.links}}<a href="{{url}}" target="_blank" rel="noopener noreferrer">{{label}}</a>{{/each}}</p>
+  {{/if}}
+
+  <nav class="case-nav" aria-label="More projects">
+    <a href="{{prev.url}}"><span>Previous</span>{{prev.title}}</a>
+    <a href="{{next.url}}" class="case-nav-next"><span>Next</span>{{next.title}}</a>
+  </nav>
+</main>

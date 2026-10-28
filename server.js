@@ -78,7 +78,18 @@ const areas = [
   { key: 'analog', label: 'Analog' },
 ];
 
-// Every project. `featured` ones appear as cards on the home page.
+const SLUGS = ['lte', 'corrosion', 'classroom-occupancy', 'aria', 'urbantrack', 'horn-antenna', 'inverted-pendulum', 'zentro', 'jarvis', 'ntc-sensor', 'bjt-op-amp'];
+const SUMMARIES = {
+  urbantrack: 'Live and historical vehicle routes from EC2 services sharing PostgreSQL on RDS.',
+  'horn-antenna': 'A Python sizing tool for horn antennas from 1 to 20 GHz, validated in CST.',
+  'inverted-pendulum': 'A 200 Hz PID loop on an ESP32 with lead-lag compensators designed on the PC.',
+  zentro: 'A pocket Asteroids console on an ESP32-S3 with a 3.2 inch SPI display.',
+  jarvis: 'A local voice assistant for macOS and desktop navigation with hand gestures.',
+  'ntc-sensor': 'A thermistor measurement chain linearized in hardware, 37.6 dB SNR.',
+  'bjt-op-amp': 'A working op-amp from discrete transistors, used as a sensor front end.',
+};
+
+// Every project. `featured` ones appear on the home page.
 const projects = [
   {
     featured: true,
@@ -202,22 +213,27 @@ const projects = [
     areas: ['analog'],
     links: [],
   },
-].map((p, i) => ({
-  ...p,
-  num: String(i + 1).padStart(2, '0'),
-  areaList: p.areas.join(' '),
-  areaLabels: p.areas.map((k) => areas.find((a) => a.key === k).label).join(', '),
-  when: [p.year, p.status].filter(Boolean).join(', '),
-}));
+].map((p, i) => {
+  const slug = SLUGS[i];
+  return {
+    ...p,
+    slug,
+    url: `/projects/${slug}`,
+    summary: p.summary || SUMMARIES[slug],
+    num: String(i + 1).padStart(2, '0'),
+    areaList: p.areas.join(' '),
+    areaLabels: p.areas.map((k) => areas.find((a) => a.key === k).label).join(', '),
+    when: [p.year, p.status].filter(Boolean).join(', '),
+  };
+});
 
 const featured = projects.filter((p) => p.featured);
 
 const bio = [
-  'I\'m Juan Andrés, a final-year Electronic Engineering student at Universidad del Norte in Barranquilla, Colombia. My coursework ends in December 2026 and I graduate in September 2027.',
-  'Most of my work sits where hardware meets software: sensors and analog front ends, firmware for ESP32 and Raspberry Pi, radio links, and the cloud services that collect the data. I have built an operational amplifier from discrete BJTs, linearized a thermistor in hardware, planned an LTE network for two localities of Bogotá and deployed serverless computer vision on AWS.',
-  'For four summers I worked at Kiddie Keep Well Camp in New Jersey, a nonprofit residential camp for children from low-income families, moving up from counselor to Program Director and, in 2026, Assistant Director. Leading a team there matters to me as much as the circuits.',
-  'Before that I was Vice President and then President of the IEEE Robotics and Automation Society chapter at Uninorte. I speak Spanish natively, English at a B2 level, French at B1 and some Portuguese, and outside engineering I follow Formula 1 closely.',
-];
+  'I\'m Juan Andrés, a final-year Electronic Engineering student at Universidad del Norte in Barranquilla, Colombia. I finish coursework in December 2026 and graduate in September 2027.',
+  'I like the part of engineering where hardware meets software: firmware for ESP32 and Raspberry Pi, radio links from ESP-NOW to LTE, computer vision at the edge and the cloud services that collect the data. Lately I planned an <a href="/projects/lte">LTE network for two localities of Bogotá</a> and built a <a href="/projects/corrosion">serverless corrosion detector</a> on AWS.',
+  'I spent four summers at <a href="/career">a nonprofit camp in New Jersey</a>, going from counselor to Assistant Director, and I was president of the IEEE RAS student chapter at Uninorte. I speak Spanish, English, French and some Portuguese, and I follow Formula 1 closely.',
+]
 
 const experience = [
   {
@@ -284,7 +300,7 @@ app.get('/', (req, res) => {
     title: 'Juan Andrés Betancourt, Electronic Engineer',
     description: 'Electronic engineer in Barranquilla, Colombia, working on embedded systems, wireless links and cloud. Available full time from December 2026.',
     canonical: `${SITE_URL}/`,
-    person, facts, featured, lte, bioIntro: bio[0],
+    person, featured, lte, bio, skills, languages,
     projectCount: projects.length,
   });
 });
@@ -309,15 +325,32 @@ app.get('/projects/lte', (req, res) => {
   });
 });
 
-app.get('/about', (req, res) => {
-  res.render('about', {
-    page: 'about',
-    title: 'About, Juan Andrés Betancourt',
-    description: 'Electronic Engineering student at Universidad del Norte in Barranquilla, Colombia. Experience, skills and languages.',
-    canonical: `${SITE_URL}/about`,
-    person, bio, experience, skills, languages,
+app.get('/projects/:slug', (req, res, next) => {
+  const i = projects.findIndex((p) => p.slug === req.params.slug);
+  if (i === -1) return next();
+  const project = projects[i];
+  res.render('project', {
+    page: 'projects',
+    title: `${project.title}, Juan Andrés Betancourt`,
+    description: project.summary,
+    canonical: `${SITE_URL}${project.url}`,
+    person, project,
+    prev: projects[(i - 1 + projects.length) % projects.length],
+    next: projects[(i + 1) % projects.length],
   });
 });
+
+app.get('/career', (req, res) => {
+  res.render('career', {
+    page: 'career',
+    title: 'Career, Juan Andrés Betancourt',
+    description: 'Experience, education and languages of Juan Andrés Betancourt, electronic engineer in Barranquilla, Colombia.',
+    canonical: `${SITE_URL}/career`,
+    person, experience, languages,
+  });
+});
+
+app.get('/about', (req, res) => res.redirect(301, '/'));
 
 app.use((req, res) => {
   res.status(404).render('404', {

@@ -30,7 +30,7 @@
   function setField(name, value) {
     if (!readout) return;
     const el = readout.querySelector('[data-field="' + name + '"]');
-    if (el) el.textContent = value;
+    if (el) el.textContent = value + (el.dataset.suffix || '');
   }
 
   maps.forEach(function (map) {
@@ -58,9 +58,7 @@
       setField('loc', locality);
       setField('upz', 'UPZ ' + c.upz);
       setField('pos', c.lat + ', ' + c.lon);
-      setField('nb', readout && readout.classList.contains('readout')
-        ? c.nb + ' within 900 m'
-        : c.nb + ' sites within 900 m');
+      setField('nb', c.nb);
     }
 
     function fromEvent(e) {
@@ -88,7 +86,7 @@
 // ── Projects index: filter by area ────────────────────────────────────────────
 (function () {
   const buttons = Array.from(document.querySelectorAll('[data-filter]'));
-  const items = Array.from(document.querySelectorAll('.pitem'));
+  const items = Array.from(document.querySelectorAll('[data-areas]'));
   const status = document.getElementById('filter-status');
   if (!buttons.length || !items.length) return;
 

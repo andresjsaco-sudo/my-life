@@ -1,8 +1,7 @@
 <main id="main" class="wrap">
   <section class="page-head" aria-labelledby="page-title">
-    <p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span>Projects</p>
     <h1 id="page-title">Projects</h1>
-    <p class="case-lede">University, research and personal projects across embedded systems, radio, cloud, computer vision, control and analog design.</p>
+    <p class="page-lede">University, research and personal work. Pick one to see the details.</p>
   </section>
 
   <div class="filters" role="group" aria-label="Filter projects by area">
@@ -11,22 +10,22 @@
   </div>
   <p class="filter-status" id="filter-status" aria-live="polite"></p>
 
-  <ol class="plist">
+  <ul class="grid">
     {{#each projects}}
-    <li class="pitem" data-areas="{{areaList}}">
-      <div class="pitem-meta">
-        <span class="pitem-num">{{num}}</span>
-        {{#if when}}<span>{{when}}</span>{{/if}}
-        <span>{{context}}</span>
-      </div>
-      <div class="pitem-body">
-        <h2>{{#if caseStudy}}<a href="{{caseStudy}}">{{title}}</a>{{else}}{{title}}{{/if}}</h2>
-        {{#if specs}}<dl class="pitem-specs">{{#each specs}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}</dl>{{/if}}
-        <p>{{description}}</p>
-        <p class="pitem-stack">{{#each stack}}<span>{{this}}</span>{{/each}}</p>
-        {{#if links.length}}<p class="pitem-links">{{#each links}}<a href="{{url}}"{{#unless (eq url "/projects/lte")}} target="_blank" rel="noopener noreferrer"{{/unless}}>{{label}}</a>{{/each}}</p>{{/if}}
-      </div>
+    <li class="tile" data-areas="{{areaList}}">
+      <a href="{{url}}" class="tile-link">
+        {{#if specs}}
+        <dl class="tile-specs">{{#each specs}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}</dl>
+        {{else}}
+        <p class="tile-area">{{areaLabels}}</p>
+        {{/if}}
+        <span class="tile-body">
+          <span class="tile-meta">{{#if year}}{{year}} / {{/if}}{{context}}</span>
+          <span class="tile-title">{{title}}</span>
+          <span class="tile-summary">{{summary}}</span>
+        </span>
+      </a>
     </li>
     {{/each}}
-  </ol>
+  </ul>
 </main>

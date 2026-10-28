@@ -1,6 +1,15 @@
-<footer class="footer">
+<footer class="footer" id="contact">
   <div class="wrap footer-inner">
-    <span>&copy; {{person.year}} {{person.name}}</span>
-    <span>10.96° N, 74.80° W, Barranquilla</span>
+    <div class="footer-main">
+      <p class="footer-name">{{person.name}}</p>
+      <p class="footer-line">Open to full-time roles in embedded systems, IoT, telecom and cloud from December 2026.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="mailto:{{person.email}}">{{person.email}}</a></li>
+      <li><a href="{{person.linkedin}}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="{{person.github}}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="{{person.cv}}">CV (PDF)</a></li>
+    </ul>
   </div>
+  <div class="wrap footer-base"><span>&copy; {{person.year}} {{person.name}}</span><span>10.96° N, 74.80° W</span></div>
 </footer>

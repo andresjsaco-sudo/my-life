@@ -7,76 +7,47 @@
 
     <div class="wrap hero-inner">
       <div class="hero-copy">
-        <p class="status"><span class="status-item"><span class="status-dot" aria-hidden="true"></span>Available full time, Dec 2026</span><span>Barranquilla, CO</span><span>Remote OK</span></p>
-        <h1 id="hero-title">Juan Andrés<br />Betancourt</h1>
-        <p class="hero-role">Electronic engineer working on embedded systems, wireless links and cloud.</p>
-        <p class="hero-lede">Final year at Universidad del Norte. I write firmware for ESP32 and Raspberry Pi, plan cellular coverage, run computer vision at the edge and deploy serverless backends on AWS.</p>
-        <div class="actions">
-          <a href="#work" class="btn btn-solid">Selected work</a>
-          <a href="mailto:{{person.email}}" class="btn btn-line">Get in touch</a>
-        </div>
-      </div>
-
-      <div class="readout" data-lte-readout>
-        <div class="readout-head"><span>LTE site readout</span><span class="readout-hint">hover a cell</span></div>
-        <dl class="readout-body">
-          <dt>site</dt><dd data-field="site">eNB-42</dd>
-          <dt>zone</dt><dd data-field="zone">UPZ 60 Parque Entrenubes, Usme</dd>
-          <dt>position</dt><dd data-field="pos">4.51945, -74.10069</dd>
-          <dt>sectors</dt><dd>36°, 156°, 276°</dd>
-          <dt>neighbors</dt><dd data-field="nb">6 within 900 m</dd>
-        </dl>
-      </div>
-      <p class="readout-note">The background is my LTE design for San Cristóbal and Usme, Bogotá: {{lte.siteCount}} three-sector sites at their real coordinates. <a href="/projects/lte">Read the case study</a></p>
-    </div>
-  </section>
-
-  <section class="facts" aria-label="Key facts">
-    <dl class="wrap facts-grid">
-      {{#each facts}}
-      <div class="fact"><dt>{{k}}</dt><dd>{{v}}</dd></div>
-      {{/each}}
-    </dl>
-  </section>
-
-  <section id="work" class="wrap section" aria-labelledby="work-title">
-    <div class="section-head">
-      <h2 id="work-title">Selected work</h2>
-      <a href="/projects" class="mono-link">All {{projectCount}} projects</a>
-    </div>
-    <div class="cards">
-      {{#each featured}}
-      <article class="card">
-        <dl class="specs">
-          {{#each specs}}<div class="spec"><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
-        </dl>
-        <div class="card-body">
-          <p class="card-meta">{{when}} / {{context}}</p>
-          <h3>{{title}}</h3>
-          <p class="card-summary">{{summary}}</p>
-          <div class="card-foot">
-            {{#if caseStudy}}
-            <a href="{{caseStudy}}" class="card-cta">Read the case study<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8 H13 M9 4 L13 8 L9 12" /></svg></a>
-            {{else}}
-            <p class="card-links">{{#each links}}<a href="{{url}}" target="_blank" rel="noopener noreferrer">{{label}}</a>{{/each}}</p>
-            {{/if}}
-            <span class="card-tags">{{areaLabels}}</span>
+        <div class="hero-id">
+          {{> portrait cls="avatar" sizes="72px"}}
+          <div>
+            <h1 id="hero-title">Juan Andrés Betancourt</h1>
+            <p class="hero-role">Electronic engineer, embedded systems, wireless links and cloud.</p>
           </div>
         </div>
-      </article>
-      {{/each}}
+        <p class="status"><span class="status-item"><span class="status-dot" aria-hidden="true"></span>Available full time from December 2026</span><span>Barranquilla, CO, or remote</span></p>
+      </div>
+      <p class="readout-line" data-lte-readout>
+        <span class="readout-label">Behind this text:</span> my <a href="/projects/lte">LTE design</a> for south Bogotá, 78 real sites. Hover one:
+        <span class="mono"><span data-field="site">eNB-42</span>, <span data-field="zone">UPZ 60 Parque Entrenubes, Usme</span>, <span data-field="nb" data-suffix=" within 900 m">6 within 900 m</span></span>
+      </p>
     </div>
   </section>
 
-  <section class="wrap section" aria-labelledby="about-title">
-    <div class="teaser">
-      {{> portrait cls="teaser-photo" sizes="(max-width: 820px) 160px, 220px" lazy=true}}
-      <div class="teaser-copy">
-        <h2 id="about-title" class="h-small">About me</h2>
-        <p>{{bioIntro}}</p>
-        <p class="teaser-more">Firmware, radio links, cloud backends, four summers leading a camp team in New Jersey, and a soft spot for Formula 1.</p>
-        <div class="actions"><a href="/about" class="btn btn-line">More about me</a><a href="{{person.cv}}" class="btn btn-line">Download CV</a></div>
-      </div>
-    </div>
-  </section>
+  <div class="wrap home">
+    <section class="bio" aria-label="About me">
+      {{#each bio}}<p>{{{this}}}</p>{{/each}}
+      <p class="bio-links"><a href="/career">Career</a><a href="{{person.cv}}">CV (PDF)</a><a href="{{person.linkedin}}" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="{{person.github}}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </section>
+
+    <section class="block" aria-labelledby="work-title">
+      <h2 id="work-title">Selected work</h2>
+      <ul class="worklist">
+        {{#each featured}}
+        <li>
+          <a href="{{url}}" class="work-title">{{title}}</a>
+          <p>{{summary}}</p>
+        </li>
+        {{/each}}
+      </ul>
+      <a href="/projects" class="more-link">All {{projectCount}} projects</a>
+    </section>
+
+    <section class="block" aria-labelledby="skills-title">
+      <h2 id="skills-title">Skills</h2>
+      <dl class="skill-lines">
+        {{#each skills}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
+        <div><dt>Languages</dt><dd>{{#each languages}}{{k}} ({{v}}){{#unless @last}}, {{/unless}}{{/each}}</dd></div>
+      </dl>
+    </section>
+  </div>
 </main>
