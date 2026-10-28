@@ -1,5 +1,6 @@
 <main id="main" class="wrap narrow">
-  <p class="crumbs"><a href="/projects">Projects</a><span aria-hidden="true">/</span>{{project.areaLabels}}</p>
+  <a href="/projects" class="back-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6"/></svg>All projects</a>
+  <p class="crumbs">{{project.areaLabels}}</p>
   <h1 class="detail-title">{{project.title}}</h1>
   <p class="detail-meta">{{#if project.when}}{{project.when}} / {{/if}}{{project.context}}</p>
 
@@ -9,7 +10,7 @@
 
   <p class="detail-text">{{project.description}}</p>
 
-  <p class="detail-stack">{{#each project.stack}}<span>{{this}}</span>{{/each}}</p>
+  <p class="chips detail-chips">{{#each project.tech}}<span class="chip">{{#if icon}}{{icon icon}}{{/if}}{{label}}</span>{{/each}}</p>
 
   {{#if project.links.length}}
   <p class="detail-links">{{#each project.links}}<a href="{{url}}" target="_blank" rel="noopener noreferrer">{{label}}</a>{{/each}}</p>

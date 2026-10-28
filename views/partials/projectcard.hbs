@@ -5,9 +5,9 @@
     <span class="pcard-summary">{{summary}}</span>
     <span class="chips">{{#each tech}}<span class="chip">{{#if icon}}{{icon icon}}{{/if}}{{label}}</span>{{/each}}</span>
   </a>
-  {{#if action}}
+  {{#if actions.length}}
   <div class="pcard-foot">
-    <a href="{{action.url}}" class="pcard-btn"{{#unless (eq action.kind "case")}} target="_blank" rel="noopener noreferrer"{{/unless}}>{{#if (eq action.kind "github")}}{{icon "github" "bi"}}{{/if}}{{#if (eq action.kind "case")}}<svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{{/if}}{{#if (eq action.kind "web")}}<svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{{/if}}{{action.label}}</a>
+    {{#each actions}}<a href="{{url}}" class="pcard-btn"{{#unless (eq kind "case")}} target="_blank" rel="noopener noreferrer"{{/unless}}>{{#if (eq kind "github")}}{{icon "github" "bi"}}{{/if}}{{#if (eq kind "case")}}<svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{{/if}}{{#if (eq kind "web")}}<svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>{{/if}}{{label}}</a>{{/each}}
   </div>
   {{/if}}
 </article>

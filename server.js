@@ -246,11 +246,11 @@ const projects = [
     areaLabels: p.areas.map((k) => areas.find((a) => a.key === k).label).join(', '),
     when: [p.year, p.status].filter(Boolean).join(', '),
     tech: p.stack.map((label) => ({ label, icon: ICON_FOR[label] || null })),
-    action: p.caseStudy
-      ? { label: 'Read the case study', url: p.caseStudy, kind: 'case' }
-      : (p.links.find((l) => l.url.includes('github.com'))
-        ? { label: 'View on GitHub', url: p.links.find((l) => l.url.includes('github.com')).url, kind: 'github' }
-        : (p.links[0] ? { label: 'Visit website', url: p.links[0].url, kind: 'web' } : null)),
+    actions: [
+      p.caseStudy && { label: 'Case study', url: p.caseStudy, kind: 'case' },
+      p.links.find((l) => l.url.includes('github.com')) && { label: p.caseStudy ? 'GitHub' : 'View on GitHub', url: p.links.find((l) => l.url.includes('github.com')).url, kind: 'github' },
+      !p.links.some((l) => l.url.includes('github.com')) && p.links[0] && !p.caseStudy && { label: 'Visit website', url: p.links[0].url, kind: 'web' },
+    ].filter(Boolean),
   };
 });
 
@@ -303,11 +303,27 @@ const languages = [
   { k: 'Turkish', code: 'tr' },
 ];
 
+const chip = (label, icon) => ({ label, icon: icon || null });
+const skillRows = [
+  { label: 'Embedded and hardware', items: [
+    chip('ESP32', 'espressif'), chip('ESP32-S3', 'espressif'), chip('Raspberry Pi', 'raspberrypi'), chip('Arduino', 'arduino'),
+    chip('C', 'c'), chip('C++', 'cplusplus'), chip('KiCad', 'kicad'), chip('LTspice'), chip('PCB design'), chip('SPI and I2C'),
+    chip('ESP-NOW'), chip('BLE'), chip('PID control'), chip('MATLAB')] },
+  { label: 'Cloud and software', reverse: true, items: [
+    chip('AWS', 'amazonwebservices'), chip('Lambda', 'awslambda'), chip('DynamoDB', 'amazondynamodb'), chip('S3', 'amazons3'),
+    chip('EC2', 'amazonec2'), chip('RDS', 'amazonrds'), chip('API Gateway', 'amazonapigateway'), chip('MQTT', 'mqtt'),
+    chip('Python', 'python'), chip('JavaScript', 'javascript'), chip('TypeScript', 'typescript'), chip('React', 'react'),
+    chip('Next.js', 'nextdotjs'), chip('Node.js', 'nodedotjs'), chip('Docker', 'docker'), chip('Linux', 'linux'), chip('Git', 'git')] },
+  { label: 'RF, vision and ML', items: [
+    chip('LTE planning'), chip('Link budgets'), chip('COST-231 Hata'), chip('Antenna design'), chip('CST Microwave Studio'),
+    chip('YOLOv8'), chip('ONNX Runtime', 'onnx'), chip('OpenCV', 'opencv'), chip('MediaPipe', 'mediapipe'),
+    chip('TensorFlow Lite', 'tensorflow'), chip('Leaflet', 'leaflet'), chip('LaTeX', 'latex')] },
+];
+
 const glance = [
   { k: 'Studying', v: 'B.Sc. Electronic Engineering, Universidad del Norte' },
   { k: 'Graduating', v: 'September 2027, coursework done December 2026' },
   { k: 'Saber Pro', v: '99th percentile nationally' },
-  { k: 'Based in', v: 'Barranquilla, Colombia. Open to remote' },
   { k: 'Focus', v: 'Embedded systems, RF and telecom, cloud and IoT' },
 ];
 
@@ -336,7 +352,7 @@ app.get('/', (req, res) => {
     title: 'Juan Andrés Betancourt, Electronic Engineer',
     description: 'Electronic engineer in Barranquilla, Colombia, working on embedded systems, wireless links and cloud. Available full time from December 2026.',
     canonical: `${SITE_URL}/`,
-    person, featured, lte, bio, skills, languages, glance,
+    person, featured, lte, bio, skills, skillRows, languages, glance,
     projectCount: projects.length,
   });
 });

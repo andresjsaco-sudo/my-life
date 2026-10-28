@@ -1,25 +1,18 @@
 <main id="main">
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-map" data-lte-map>
-      {{> ltemap}}
-    </div>
-    <div class="hero-fade" aria-hidden="true"></div>
-
-    <div class="wrap hero-inner">
-      <div class="hero-copy">
-        <div class="hero-id">
-          {{> portrait cls="avatar" sizes="72px"}}
-          <div>
-            <h1 id="hero-title">Juan Andrés Betancourt</h1>
-            <p class="hero-role">Electronic engineer, embedded systems, wireless links and cloud.</p>
-          </div>
-        </div>
-        <p class="status"><span class="status-item"><span class="status-dot" aria-hidden="true"></span>Available full time from December 2026</span><span>Barranquilla, CO, or remote</span></p>
+  <section class="hero2" aria-labelledby="hero-title">
+    <div class="wrap hero2-inner">
+      <div class="hero2-copy">
+        {{> portrait cls="avatar avatar-lg" sizes="96px"}}
+        <h1 id="hero-title">Juan Andrés Betancourt</h1>
+        <p class="hero2-role">Electronic engineer, embedded systems, wireless links and cloud.</p>
+        <p class="readout-line" data-lte-readout>
+          On the right: my <a href="/projects/lte">LTE design</a> for south Bogotá, 78 real sites. Hover one.
+          <span class="mono"><span data-field="site">eNB-42</span>, <span data-field="zone">UPZ 60 Parque Entrenubes, Usme</span>, <span data-field="nb" data-suffix=" within 900 m">6 within 900 m</span></span>
+        </p>
       </div>
-      <p class="readout-line" data-lte-readout>
-        <span class="readout-label">Behind this text:</span> my <a href="/projects/lte">LTE design</a> for south Bogotá, 78 real sites. Hover one:
-        <span class="mono"><span data-field="site">eNB-42</span>, <span data-field="zone">UPZ 60 Parque Entrenubes, Usme</span>, <span data-field="nb" data-suffix=" within 900 m">6 within 900 m</span></span>
-      </p>
+      <div class="hero2-map" data-lte-map>
+        {{> ltemap}}
+      </div>
     </div>
   </section>
 
@@ -45,9 +38,19 @@
 
     <section class="block" aria-labelledby="skills-title">
       <div class="block-head"><h2 id="skills-title">Skills</h2><a href="/career" class="more-link">Career and education</a></div>
-      <dl class="skill-panel">
-        {{#each skills}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
-      </dl>
+      <div class="marquee-wrap">
+        {{#each skillRows}}
+        <div class="marquee{{#if reverse}} marquee-rev{{/if}}">
+          <p class="marquee-label">{{label}}</p>
+          <div class="marquee-view">
+            <ul class="marquee-track">
+              {{#each items}}<li class="schip">{{#if icon}}{{icon icon "si"}}{{/if}}{{label}}</li>{{/each}}
+              {{#each items}}<li class="schip" aria-hidden="true">{{#if icon}}{{icon icon "si"}}{{/if}}{{label}}</li>{{/each}}
+            </ul>
+          </div>
+        </div>
+        {{/each}}
+      </div>
     </section>
   </div>
 </main>
