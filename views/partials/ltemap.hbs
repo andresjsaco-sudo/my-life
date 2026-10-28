@@ -1,0 +1,10 @@
+<svg class="lte-svg" viewBox="0 0 {{lte.viewW}} {{lte.viewH}}" data-near="{{lte.neighborUnits}}" role="img" aria-label="Map of {{lte.siteCount}} LTE sites in San Cristóbal and Usme, Bogotá">
+  {{#if withZones}}<path class="lte-upz" data-layer="upz" d="{{lte.upzPath}}" />{{/if}}
+  <g class="lte-cells" data-layer="cells">
+    {{#each lte.cells}}<polygon class="lte-cell" points="{{points}}" data-i="{{i}}" data-id="{{id}}" data-cx="{{cx}}" data-cy="{{cy}}" data-lat="{{lat}}" data-lon="{{lon}}" data-loc="{{locality}}" data-upz="{{upz}}" data-nb="{{neighbors}}" />{{/each}}
+  </g>
+  <path class="lte-sectors" data-layer="sectors" d="{{lte.sectorPath}}" />
+  <g class="lte-dots">
+    {{#each lte.cells}}<circle class="lte-dot" cx="{{cx}}" cy="{{cy}}" r="5" data-i="{{i}}" />{{/each}}
+  </g>
+</svg>

@@ -1,0 +1,130 @@
+<main id="main" class="wrap">
+  <section class="case-head" aria-labelledby="case-title">
+    <p class="crumbs"><a href="/#work">Work</a><span aria-hidden="true">/</span>Case study<span aria-hidden="true">/</span>Cellular Systems, Universidad del Norte, 2026</p>
+    <h1 id="case-title">Planning LTE coverage for two localities of Bogotá</h1>
+    <p class="case-lede">How many base stations does it take to cover the urban area of San Cristóbal and Usme in band 2? From the link budget to the radius, from the radius to a site count, and from the count to {{lte.siteCount}} real coordinates on the map.</p>
+    <dl class="case-meta">
+      <div><dt>Status</dt><dd>Part 1, coverage: done. Part 2, capacity: next.</dd></div>
+      <div><dt>Operator and band</dt><dd>Claro, band 2 (1900 MHz) FDD, 20 MHz</dd></div>
+      <div><dt>Design area</dt><dd>47.68 km² across 12 urban UPZ</dd></div>
+      <div><dt>Tools</dt><dd>Python, COST-231 Hata, KML, LaTeX, Leaflet</dd></div>
+    </dl>
+    <div class="actions">
+      <a href="#map" class="btn btn-solid">Explore the map</a>
+      <a href="/lte/LTE_coverage_report_ES.pdf" class="btn btn-line">Report (PDF, Spanish)</a>
+      <a href="https://github.com/andresjsaco-sudo/lte-network-design" class="btn btn-line" target="_blank" rel="noopener noreferrer">Code and data</a>
+    </div>
+  </section>
+
+  <section id="map" class="map-panel" aria-label="Interactive site map">
+    <div class="map-frame">
+      <div class="map-canvas" data-lte-map>
+        {{> ltemap withZones=true}}
+        <div class="map-scale" aria-hidden="true"><span></span>1 km</div>
+        <div class="map-north" aria-hidden="true">N<svg width="12" height="16" viewBox="0 0 12 16"><path d="M6 0 L11 16 L6 12 L1 16 Z" /></svg></div>
+      </div>
+    </div>
+    <div class="map-side">
+      <div class="map-readout" data-lte-readout>
+        <p class="map-hint">Hover or tap a cell</p>
+        <p class="map-site" data-field="site">eNB-42</p>
+        <dl>
+          <dt>Locality</dt><dd data-field="loc">Usme</dd>
+          <dt>Zone</dt><dd data-field="upz">UPZ 60 Parque Entrenubes</dd>
+          <dt>Coordinates</dt><dd data-field="pos" class="mono">4.51945, -74.10069</dd>
+          <dt>Sectors</dt><dd>36°, 156°, 276°, tilt 7°</dd>
+          <dt>Tx power</dt><dd>40 W (46 dBm) per sector</dd>
+          <dt>Neighbors</dt><dd data-field="nb">6 sites within 900 m</dd>
+        </dl>
+      </div>
+      <fieldset class="layers">
+        <legend>Layers</legend>
+        <div class="layer-btns">
+          <button type="button" class="layer-btn" data-toggle="cells" aria-pressed="true"><span class="swatch swatch-cells"></span>Cells</button>
+          <button type="button" class="layer-btn" data-toggle="sectors" aria-pressed="true"><span class="swatch swatch-sectors"></span>Sectors</button>
+          <button type="button" class="layer-btn" data-toggle="upz" aria-pressed="true"><span class="swatch swatch-upz"></span>Zone boundaries</button>
+        </div>
+      </fieldset>
+      <div class="map-note">
+        <p>Each hexagon is the service area of one three-sector site, sized from the uplink-limited radius. Highlighted cells are the selected site and its first ring of neighbors.</p>
+        <p><a href="/lte/">Open the full map with streets</a></p>
+      </div>
+    </div>
+  </section>
+
+  <dl class="metrics">
+    {{#each metrics}}<div class="metric"><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
+  </dl>
+
+  <section class="doc" aria-labelledby="s1">
+    <h2 id="s1"><span>01</span>The problem</h2>
+    <div class="doc-body">
+      <p>San Cristóbal and Usme sit on the hills of southern Bogotá. Their urban area covers 47.68 km² across 12 zoning units (UPZ). The goal of the first part was the minimum number of three-sector LTE sites that covers that area in band 2, with real coordinates and real equipment for each one.</p>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="s2">
+    <h2 id="s2"><span>02</span>Link budget</h2>
+    <div class="doc-body">
+      <p>Downlink and uplink budgets for a typical station: antenna at 30 m, 8 dB shadow fading margin, 9 dB building penetration loss and MCS 12. COST-231 Hata, solved for distance, turns each maximum allowable path loss into a cell radius.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Parameter</th><th scope="col" class="num">Downlink</th><th scope="col" class="num">Uplink</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Max. allowable path loss</th><td class="num">131.96 dB</td><td class="num">128.12 dB</td></tr>
+            <tr><th scope="row">Cell radius, COST-231 Hata</th><td class="num">0.693 km</td><td class="num hot">0.561 km</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">The uplink, limited by the handset's transmit power, gives the smaller radius, so it sets the design.</p>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="s3">
+    <h2 id="s3"><span>03</span>From radius to sites</h2>
+    <div class="doc-body">
+      <div class="formula">
+        <p><span>inter-site distance</span> d = 1.5 × R = 1.5 × 0.561 km ≈ <b>842 m</b></p>
+        <p><span>area per site</span> A = (√3 / 2) × d² ≈ <b>0.613 km²</b></p>
+        <p><span>sites needed</span> N = 47.68 / 0.613 ≈ <b>78</b></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="s4">
+    <h2 id="s4"><span>04</span>Placing the sites</h2>
+    <div class="doc-body">
+      <p>The 78 sites sit on a hexagonal grid with 842 m spacing. Instead of dropping the grid at an arbitrary origin, I searched its offset and rotation to maximise coverage of the real UPZ boundaries, which reached 97.4% of the area at the design radius. The result was exported as a Google Earth KML with every site, sector footprint and technical sheet.</p>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="s5">
+    <h2 id="s5"><span>05</span>Equipment</h2>
+    <div class="doc-body">
+      <dl class="kv">
+        {{#each equipment}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
+      </dl>
+    </div>
+  </section>
+
+  <section class="doc" aria-labelledby="s6">
+    <h2 id="s6"><span>06</span>What comes next</h2>
+    <div class="doc-body">
+      <ul>
+        <li>Capacity dimensioning, comparing the coverage-limited site count with the capacity-limited one.</li>
+        <li>A terrain-aware propagation analysis, since both localities are hilly and COST-231 Hata assumes flat urban terrain.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="downloads" aria-label="Downloads">
+    <a href="/lte/LTE_coverage_report_ES.pdf" class="dl"><span>PDF, Spanish</span>Full coverage report</a>
+    <a href="https://github.com/andresjsaco-sudo/lte-network-design/blob/main/data/lte_san_cristobal_usme.kml" class="dl" target="_blank" rel="noopener noreferrer"><span>KML, Google Earth</span>78 sites and 234 sectors</a>
+    <a href="https://github.com/andresjsaco-sudo/lte-network-design" class="dl" target="_blank" rel="noopener noreferrer"><span>GitHub</span>Code, data and LaTeX source</a>
+  </section>
+
+  <nav class="case-nav" aria-label="Case studies">
+    <a href="/#work"><span>Back</span>All work</a>
+    <a href="mailto:{{person.email}}" class="case-nav-next"><span>Questions about this design?</span>Write to me</a>
+  </nav>
+</main>
