@@ -24,34 +24,29 @@
   </section>
 
   <div class="wrap home">
-    <section class="bio" aria-label="About me">
-      {{#each bio}}<p>{{{this}}}</p>{{/each}}
-      <p class="bio-links"><a href="/career">Career</a><a href="{{person.cv}}">CV (PDF)</a><a href="{{person.linkedin}}" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="{{person.github}}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    <section class="intro" aria-label="About me">
+      <div class="bio">
+        {{#each bio}}<p>{{{this}}}</p>{{/each}}
+      </div>
+      <aside class="glance" aria-label="At a glance">
+        <dl>
+          {{#each glance}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
+        </dl>
+        <div class="langs-row">{{#each languages}}<span class="lang">{{> flag code=code}}{{k}}</span>{{/each}}</div>
+      </aside>
     </section>
 
     <section class="block" aria-labelledby="work-title">
       <div class="block-head"><h2 id="work-title">Selected work</h2><a href="/projects" class="more-link">All {{projectCount}} projects</a></div>
-      <ul class="minicards">
-        {{#each featured}}
-        <li>
-          <a href="{{url}}" class="minicard">
-            <dl class="mini-specs">{{#each specs}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}</dl>
-            <span class="mini-body">
-              <span class="mini-meta">{{year}} / {{areaLabels}}</span>
-              <span class="mini-title">{{title}}</span>
-              <span class="mini-summary">{{summary}}</span>
-            </span>
-          </a>
-        </li>
-        {{/each}}
-      </ul>
+      <div class="pgrid pgrid-2">
+        {{#each featured}}{{> projectcard}}{{/each}}
+      </div>
     </section>
 
     <section class="block" aria-labelledby="skills-title">
       <div class="block-head"><h2 id="skills-title">Skills</h2><a href="/career" class="more-link">Career and education</a></div>
       <dl class="skill-panel">
         {{#each skills}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
-        <div><dt>Languages</dt><dd>{{#each languages}}{{k}} ({{v}}){{#unless @last}}, {{/unless}}{{/each}}</dd></div>
       </dl>
     </section>
   </div>

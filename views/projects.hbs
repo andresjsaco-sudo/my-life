@@ -10,22 +10,7 @@
   </div>
   <p class="filter-status" id="filter-status" aria-live="polite"></p>
 
-  <ul class="grid">
-    {{#each projects}}
-    <li class="tile" data-areas="{{areaList}}">
-      <a href="{{url}}" class="tile-link">
-        {{#if specs}}
-        <dl class="tile-specs">{{#each specs}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}</dl>
-        {{else}}
-        <p class="tile-area">{{areaLabels}}</p>
-        {{/if}}
-        <span class="tile-body">
-          <span class="tile-meta">{{#if year}}{{year}} / {{/if}}{{context}}</span>
-          <span class="tile-title">{{title}}</span>
-          <span class="tile-summary">{{summary}}</span>
-        </span>
-      </a>
-    </li>
-    {{/each}}
-  </ul>
+  <div class="pgrid">
+    {{#each projects}}<div class="pcell" data-areas="{{areaList}}">{{> projectcard}}</div>{{/each}}
+  </div>
 </main>

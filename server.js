@@ -4,6 +4,23 @@ const path = require('path');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const lte = require('./lib/lte');
+const ICONS = require('./lib/icon-data.json');
+
+// Technology label -> icon slug (Simple Icons, CC0).
+const ICON_FOR = {
+  'Python': 'python', 'KML': 'googleearth', 'Leaflet': 'leaflet', 'ONNX Runtime': 'onnx', 'AWS CDK': 'amazonwebservices',
+  'Lambda': 'awslambda', 'S3': 'amazons3', 'DynamoDB': 'amazondynamodb', 'Cognito': 'amazoncognito', 'React': 'react',
+  'Raspberry Pi 4': 'raspberrypi', 'MQTT/TLS': 'mqtt', 'AWS IoT Core': 'amazonwebservices', 'Next.js': 'nextdotjs',
+  'ESP32-S3': 'espressif', 'ESP32': 'espressif', 'C++': 'cplusplus', 'AWS EC2': 'amazonec2', 'RDS PostgreSQL': 'postgresql',
+  'Node.js': 'nodedotjs', 'Express': 'express', 'Streamlit': 'streamlit', 'FastAPI': 'fastapi', 'Electron': 'electron',
+  'MediaPipe': 'mediapipe', 'LaTeX': 'latex', 'GitHub': 'github',
+};
+
+function iconSvg(slug, cls) {
+  const i = ICONS[slug];
+  if (!i) return '';
+  return `<svg class="${cls || 'ti'}" viewBox="0 0 24 24" aria-hidden="true"><path fill="${i.color}" d="${i.path}"/></svg>`;
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,6 +61,7 @@ app.engine('hbs', engine({
   partialsDir: path.join(__dirname, 'views/partials'),
   helpers: {
     eq: (a, b) => a === b,
+    icon: (slug, cls) => new (require('handlebars').SafeString)(iconSvg(slug, typeof cls === 'string' ? cls : '')),
   },
 }));
 app.set('view engine', 'hbs');
@@ -227,6 +245,12 @@ const projects = [
     areaList: p.areas.join(' '),
     areaLabels: p.areas.map((k) => areas.find((a) => a.key === k).label).join(', '),
     when: [p.year, p.status].filter(Boolean).join(', '),
+    tech: p.stack.map((label) => ({ label, icon: ICON_FOR[label] || null })),
+    action: p.caseStudy
+      ? { label: 'Read the case study', url: p.caseStudy, kind: 'case' }
+      : (p.links.find((l) => l.url.includes('github.com'))
+        ? { label: 'View on GitHub', url: p.links.find((l) => l.url.includes('github.com')).url, kind: 'github' }
+        : (p.links[0] ? { label: 'Visit website', url: p.links[0].url, kind: 'web' } : null)),
   };
 });
 
@@ -235,7 +259,7 @@ const featured = projects.filter((p) => p.featured);
 const bio = [
   'I\'m Juan Andrés, a final-year Electronic Engineering student at Universidad del Norte in Barranquilla, Colombia. I finish coursework in December 2026 and graduate in September 2027.',
   'I like the part of engineering where hardware meets software: firmware for ESP32 and Raspberry Pi, radio links from ESP-NOW to LTE, computer vision at the edge and the cloud services that collect the data. Lately I planned an <a href="/projects/lte">LTE network for two localities of Bogotá</a> and built a <a href="/projects/corrosion">serverless corrosion detector</a> on AWS.',
-  'I spent four summers at <a href="/career">a nonprofit camp in New Jersey</a>, going from counselor to Assistant Director, and I was president of the IEEE RAS student chapter at Uninorte. I speak Spanish, English, French and some Portuguese, and I follow Formula 1 closely.',
+  'I spent four summers at <a href="/career">a nonprofit camp in New Jersey</a>, going from counselor to Assistant Director, and I was president of the IEEE RAS student chapter at Uninorte. I speak Spanish, English and French, some Portuguese and a little Turkish, and I follow Formula 1 closely.',
 ]
 
 const experience = [
@@ -272,10 +296,19 @@ const skills = [
 ];
 
 const languages = [
-  { k: 'Spanish', v: 'Native' },
-  { k: 'English', v: 'B2' },
-  { k: 'French', v: 'B1' },
-  { k: 'Portuguese', v: 'A2' },
+  { k: 'Spanish', code: 'co' },
+  { k: 'English', code: 'us' },
+  { k: 'French', code: 'fr' },
+  { k: 'Portuguese', code: 'br' },
+  { k: 'Turkish', code: 'tr' },
+];
+
+const glance = [
+  { k: 'Studying', v: 'B.Sc. Electronic Engineering, Universidad del Norte' },
+  { k: 'Graduating', v: 'September 2027, coursework done December 2026' },
+  { k: 'Saber Pro', v: '99th percentile nationally' },
+  { k: 'Based in', v: 'Barranquilla, Colombia. Open to remote' },
+  { k: 'Focus', v: 'Embedded systems, RF and telecom, cloud and IoT' },
 ];
 
 const lteCase = {
@@ -303,7 +336,7 @@ app.get('/', (req, res) => {
     title: 'Juan Andrés Betancourt, Electronic Engineer',
     description: 'Electronic engineer in Barranquilla, Colombia, working on embedded systems, wireless links and cloud. Available full time from December 2026.',
     canonical: `${SITE_URL}/`,
-    person, featured, lte, bio, skills, languages,
+    person, featured, lte, bio, skills, languages, glance,
     projectCount: projects.length,
   });
 });

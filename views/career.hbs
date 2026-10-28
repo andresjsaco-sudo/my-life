@@ -32,6 +32,6 @@
 
   <section class="block" aria-labelledby="lang-title">
     <h2 id="lang-title">Languages</h2>
-    <p class="plain">{{#each languages}}{{k}} ({{v}}){{#unless @last}}, {{/unless}}{{/each}}</p>
+    <div class="langs-row">{{#each languages}}<span class="lang">{{> flag code=code}}{{k}}</span>{{/each}}</div>
   </section>
 </main>
