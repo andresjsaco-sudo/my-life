@@ -50,6 +50,9 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Static files
+// Cache-busting version for CSS and JS: changes on every deploy.
+const ASSET_VERSION = (process.env.VERCEL_GIT_COMMIT_SHA || Date.now().toString(36)).slice(0, 8);
+app.use((req, res, next) => { res.locals.v = ASSET_VERSION; next(); });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1h' }));
 
 // ── Data ──────────────────────────────────────────────────────────────────────

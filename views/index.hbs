@@ -30,21 +30,26 @@
     </section>
 
     <section class="block" aria-labelledby="work-title">
-      <h2 id="work-title">Selected work</h2>
-      <ul class="worklist">
+      <div class="block-head"><h2 id="work-title">Selected work</h2><a href="/projects" class="more-link">All {{projectCount}} projects</a></div>
+      <ul class="minicards">
         {{#each featured}}
         <li>
-          <a href="{{url}}" class="work-title">{{title}}</a>
-          <p>{{summary}}</p>
+          <a href="{{url}}" class="minicard">
+            <dl class="mini-specs">{{#each specs}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}</dl>
+            <span class="mini-body">
+              <span class="mini-meta">{{year}} / {{areaLabels}}</span>
+              <span class="mini-title">{{title}}</span>
+              <span class="mini-summary">{{summary}}</span>
+            </span>
+          </a>
         </li>
         {{/each}}
       </ul>
-      <a href="/projects" class="more-link">All {{projectCount}} projects</a>
     </section>
 
     <section class="block" aria-labelledby="skills-title">
-      <h2 id="skills-title">Skills</h2>
-      <dl class="skill-lines">
+      <div class="block-head"><h2 id="skills-title">Skills</h2><a href="/career" class="more-link">Career and education</a></div>
+      <dl class="skill-panel">
         {{#each skills}}<div><dt>{{k}}</dt><dd>{{v}}</dd></div>{{/each}}
         <div><dt>Languages</dt><dd>{{#each languages}}{{k}} ({{v}}){{#unless @last}}, {{/unless}}{{/each}}</dd></div>
       </dl>

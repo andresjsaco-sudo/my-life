@@ -1,15 +1,17 @@
 <footer class="footer" id="contact">
-  <div class="wrap footer-inner">
-    <div class="footer-main">
-      <p class="footer-name">{{person.name}}</p>
-      <p class="footer-line">Open to full-time roles in embedded systems, IoT, telecom and cloud from December 2026.</p>
+  <div class="wrap">
+    <div class="footer-card">
+      <div class="footer-main">
+        <p class="footer-name">Let's talk</p>
+        <p class="footer-line">Open to full-time roles in embedded systems, IoT, telecom and cloud from December 2026, in Barranquilla or remote.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="mailto:{{person.email}}" class="icon-link"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3.5 6.5 12 13l8.5-6.5" /></svg>Email</a></li>
+        <li><a href="{{person.linkedin}}" class="icon-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5" /></svg>LinkedIn</a></li>
+        <li><a href="{{person.github}}" class="icon-link" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5" /></svg>GitHub</a></li>
+        <li><a href="{{person.cv}}" class="icon-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z" /><path d="M14 3v4h4M10 13h5M10 17h5" /></svg>CV (PDF)</a></li>
+      </ul>
     </div>
-    <ul class="footer-links">
-      <li><a href="mailto:{{person.email}}">{{person.email}}</a></li>
-      <li><a href="{{person.linkedin}}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-      <li><a href="{{person.github}}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-      <li><a href="{{person.cv}}">CV (PDF)</a></li>
-    </ul>
   </div>
-  <div class="wrap footer-base"><span>&copy; {{person.year}} {{person.name}}</span><span>10.96° N, 74.80° W</span></div>
+  <div class="wrap footer-base"><span>&copy; {{person.year}} {{person.name}}</span><span>{{person.email}}</span></div>
 </footer>
